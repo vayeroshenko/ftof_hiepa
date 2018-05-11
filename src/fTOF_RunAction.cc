@@ -53,6 +53,8 @@ void fTOF_RunAction::BeginOfRunAction(const G4Run* aRun)
   tree->Branch("primTime", &EventInfo.primTime, "primTime/D");
 
 
+
+
   //Hits
 
   //tree->Branch("TrackID",    &HitInfo.TrackID,    "TrackID/I");
@@ -95,6 +97,15 @@ void fTOF_RunAction::BeginOfRunAction(const G4Run* aRun)
   tree->Branch("trkPosZ", _trkPosZ, "trkPosZ[nPhot]/D");
   tree->Branch("trkT", _trkT, "trkT[nPhot]/D");
   tree->Branch("trkLength",  _trkLength, "trkLength[nPhot]/D");
+
+
+  tree->Branch("entPosX", _entPosX, "entPosX[nPhot]/D");
+  tree->Branch("entPosY", _entPosY, "entPosY[nPhot]/D");
+  tree->Branch("entPosZ", _entPosZ, "entPosZ[nPhot]/D");
+
+  tree->Branch("entMomX", _entMomX, "entMomX[nPhot]/D");
+  tree->Branch("entMomY", _entMomY, "entMomY[nPhot]/D");
+  tree->Branch("entMomZ", _entMomZ, "entMomZ[nPhot]/D");
 
 
   tree->Branch("entTime", _entTime, "entTime[nPhot]/D");

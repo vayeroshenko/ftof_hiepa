@@ -97,6 +97,17 @@ void fTOF_EventAction::EndOfEventAction(const G4Event* event)
     runAction->_trkT[i] = (*THC)[i]->myData.trkT;
     runAction->_trkLength[i] = (*THC)[i]->myData.trkLength;
 
+    runAction->_entMomX[i] = (*THC)[i]->myData.entMomX;
+    runAction->_entMomY[i] = (*THC)[i]->myData.entMomY;
+    runAction->_entMomZ[i] = (*THC)[i]->myData.entMomZ;
+    runAction->_entPosX[i] = (*THC)[i]->myData.entPosX;
+    runAction->_entPosY[i] = (*THC)[i]->myData.entPosY;
+    runAction->_entPosZ[i] = (*THC)[i]->myData.entPosZ;
+
+
+
+
+
     runAction->_entTime[i] = (*THC)[i]->myData.entTime;
 
     runAction->_nSideRefl[i] = (*THC)[i]->myData.trkNSideRefl;

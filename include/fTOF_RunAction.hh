@@ -59,6 +59,14 @@ public:
 
   G4double _entTime[_nPhotMax];
 
+  G4double _entPosX[_nPhotMax];
+  G4double _entPosY[_nPhotMax];
+  G4double _entPosZ[_nPhotMax];
+
+  G4double _entMomX[_nPhotMax];
+  G4double _entMomY[_nPhotMax];
+  G4double _entMomZ[_nPhotMax];
+
   G4int _nSideRefl[_nPhotMax];
 
 

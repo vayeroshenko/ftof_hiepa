@@ -35,6 +35,13 @@ private:
   G4double _trkT;
   G4double _trkLength;
 
+  G4double _entMomX;
+  G4double _entMomY;
+  G4double _entMomZ;
+  G4double _entPosX;
+  G4double _entPosY;
+  G4double _entPosZ;
+
   G4double _entTime;
 
   G4double _trkNSideRefl = 0;

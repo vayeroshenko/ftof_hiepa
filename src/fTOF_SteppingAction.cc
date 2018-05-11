@@ -133,8 +133,35 @@ void fTOF_SteppingAction::UserSteppingAction(const G4Step* aStep)
 
 
 
-  // if (aPrePV->GetName().contains("World") &&
-  //     aPostPV->GetName().contains("quartzBar") && trackID == 1) {  /////////////////////////////////////////////////////////////////////////////////
+  if (aPrePV->GetName().contains("World") &&
+      aPostPV->GetName().contains("quartzBar") && aTrack->GetDynamicParticle()->GetDefinition()->GetParticleName() == "mu-") {  
+  
+    std::cout << "              ENTERING TIME               " << _trkT << std::endl;  
+    G4String sdName = "fTOF";
+      G4SDManager* SDman = G4SDManager::GetSDMpointer();
+       fTOF_SensitiveDetector* sd = 
+      (fTOF_SensitiveDetector*)SDman->FindSensitiveDetector(sdName);
+    HitData hitInfo;
+    hitInfo.entMomX = _trkMomX;
+    hitInfo.entMomY = _trkMomY;
+    hitInfo.entMomZ = _trkMomZ;
+    hitInfo.entPosX = _trkPosX/mm;
+    hitInfo.entPosY = _trkPosY/mm;
+    hitInfo.entPosZ = _trkPosZ/mm;
+    hitInfo.entTime = _trkT/ps;
+    hitInfo.trkT = _trkT/ps;
+    hitInfo.trkSideID = -500.;
+    sd->ProcessHits_fTOF(aStep, NULL, hitInfo);
+
+  }  
+    if (aPostPV->GetName().contains("World") &&
+      aPrePV->GetName().contains("quartzBar") && aTrack->GetDynamicParticle()->GetDefinition()->GetParticleName() == "mu-") {  /////////////////////////////////////////////////////////////////////////////////
+  
+    // std::cout << "              ESCAPING TIME               " << _trkT << std::endl;
+    
+  }  
+
+
   //   std::string nameSec = aPostPV->GetName();
   //   //std::string numberSec = nameSec.substr(nameSec.find("_impr_") + 6, 2);
   //   std::string numberSec = nameSec.substr(22, 2);
@@ -335,6 +362,13 @@ void fTOF_SteppingAction::ResetPerEvent(){
   _trkLength = -999.0;
   _trkSideID = -999.0;
   _entTime = -999.0;
+
+  _entMomX = -999.0;
+  _entMomY = -999.0;
+  _entMomZ = -999.0;
+  _entPosX = -999.0;
+  _entPosY = -999.0;
+  _entPosZ = -999.0;
 }
 
 void fTOF_SteppingAction::Reset()

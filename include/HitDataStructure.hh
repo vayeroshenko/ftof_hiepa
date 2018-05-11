@@ -27,6 +27,14 @@ struct HitData
 
   G4double entTime;
 
+  G4double entMomX;
+  G4double entMomY;
+  G4double entMomZ;
+  G4double entPosX;
+  G4double entPosY;
+  G4double entPosZ;
+
+
 
   G4int trkNSideRefl;
   G4int trkSideID;
