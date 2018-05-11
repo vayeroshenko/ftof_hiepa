@@ -106,18 +106,25 @@ namespace fTOFConst{
   const G4double sectorHeight = 40.*cm;
   const G4double sectorThickness = 1.5*cm;
 
-  // const G4double sectorLongSide = 3.*cm;
-  // const G4double sectorShortSide = 2.*cm;
+  const G4double sectorLongSide = 3.*cm;
+  const G4double sectorShortSide = 2.*cm;
   // const G4double sectorHeight = 0.5*cm;
   // const G4double sectorThickness = 1.5*cm;
 
 
-  const G4double sectorLongSide = 5.*cm;
-  const G4double sectorShortSide = 2.*cm;
+  // const G4double sectorLongSide = 5.*cm;
+  // const G4double sectorShortSide = 2.*cm;
 
   const G4double mixerWindowX = 20.*mm;
   const G4double mixerWindowZ = 15.*mm;
   const G4double mixerLength = 15.*cm;
+
+
+
+  const G4double innerRad = 47.*cm;
+  const G4double outerRad = 105.*cm;
+
+  const G4int nSec = 50;
 
 
 
