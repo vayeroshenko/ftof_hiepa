@@ -131,6 +131,27 @@ struct PlanPmtBoxStruct : VolumeStruct { //////////////////// 11.04.18
 };
 
 
+// struct TrapezeSectorStruct: VolumeStruct {
+//   const G4double shortSide;
+//   const G4double longSide;
+//   const G4double thickness;
+//   const G4double height;
+//   const G4double angle;
+//   const G4double sides;
+//   const G4double middleLine;
+//   TrapezeSectorStruct():
+//     shortSide(fTOFConst::sectorShortSide),
+//     longSide(fTOFConst::sectorLongSide),
+//     thickness(fTOFConst::sectorThickness),
+//     height(fTOFConst::sectorHeight),
+//     angle(atan((longSide-shortSide)/2./height)),
+//     sides(sqrt(height*height + (longSide-shortSide)*(longSide-shortSide)/4.)),
+//     middleLine((longSide+shortSide)/2.)
+//   {;}
+// };
+
+
+
 struct TrapezeSectorStruct: VolumeStruct {
   const G4double shortSide;
   const G4double longSide;
@@ -140,10 +161,10 @@ struct TrapezeSectorStruct: VolumeStruct {
   const G4double sides;
   const G4double middleLine;
   TrapezeSectorStruct():
-    shortSide(fTOFConst::sectorShortSide),
-    longSide(fTOFConst::sectorLongSide),
+    shortSide(fTOFConst::innerSide),
+    longSide(fTOFConst::outerSide),
     thickness(fTOFConst::sectorThickness),
-    height(fTOFConst::sectorHeight),
+    height(fTOFConst::outerRad - fTOFConst::innerRad),
     angle(atan((longSide-shortSide)/2./height)),
     sides(sqrt(height*height + (longSide-shortSide)*(longSide-shortSide)/4.)),
     middleLine((longSide+shortSide)/2.)
@@ -151,7 +172,8 @@ struct TrapezeSectorStruct: VolumeStruct {
 };
 
 
-struct TrapezeMixerStruct: VolumeStruct {
+
+struct TrapezeAbsStruct: VolumeStruct {
   const G4double shortSide;
   const G4double longSide;
   const G4double thickness;
@@ -159,15 +181,37 @@ struct TrapezeMixerStruct: VolumeStruct {
   const G4double angle;
   const G4double sides;
   const G4double middleLine;
-  TrapezeMixerStruct():
-    shortSide(fTOFConst::sectorLongSide),
-    longSide(20.*mm),
+  TrapezeAbsStruct():
+    shortSide(fTOFConst::absInnerSide),
+    longSide(fTOFConst::absOuterSide),
     thickness(fTOFConst::sectorThickness),
-    height(fTOFConst::mixerLength),
-    angle(atan(abs(longSide-shortSide)/2./height)),
+    height(fTOFConst::outerRad - fTOFConst::innerRad),
+    angle(atan((longSide-shortSide)/2./height)),
     sides(sqrt(height*height + (longSide-shortSide)*(longSide-shortSide)/4.)),
     middleLine((longSide+shortSide)/2.)
   {;}
 };
+
+
+
+
+// struct TrapezeMixerStruct: VolumeStruct {
+//   const G4double shortSide;
+//   const G4double longSide;
+//   const G4double thickness;
+//   const G4double height;
+//   const G4double angle;
+//   const G4double sides;
+//   const G4double middleLine;
+//   TrapezeMixerStruct():
+//     shortSide(fTOFConst::sectorLongSide),
+//     longSide(20.*mm),
+//     thickness(fTOFConst::sectorThickness),
+//     height(fTOFConst::mixerLength),
+//     angle(atan(abs(longSide-shortSide)/2./height)),
+//     sides(sqrt(height*height + (longSide-shortSide)*(longSide-shortSide)/4.)),
+//     middleLine((longSide+shortSide)/2.)
+//   {;}
+// };
 
 //////////////////////////////////////////////////////////////////
