@@ -126,6 +126,9 @@ namespace fTOFConst{
 
   const G4int nSec = 50;
 
+  const G4double innerSide = 2. * innerRad * TMath::Sin(TMath::Pi() / nSec);
+  const G4double outerSide = 2. * outerRad * TMath::Sin(TMath::Pi() / nSec);
+
 
 
   //const G4int  N_PMT = 9;
