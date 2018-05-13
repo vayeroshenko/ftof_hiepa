@@ -136,7 +136,9 @@ namespace fTOFConst{
   const G4double innerSide = 2. * innerRad * TMath::Sin(TMath::Pi() / nSec) - absInnerSide;
   const G4double outerSide = 2. * outerRad * TMath::Sin(TMath::Pi() / nSec) - absOuterSide;
 
+  const G4double layerDist = 1.*mm;
 
+  const G4double layerThickness = 0.1*mm;
 
 
 

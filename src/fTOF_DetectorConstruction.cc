@@ -292,8 +292,8 @@ G4VPhysicalVolume* fTOF_DetectorConstruction::Construct()
     "trapeze2",
     sector.shortSide/2.,
     sector.longSide/2.,
-    sector.thickness/2.,
-    sector.thickness/2.,
+    fTOFConst::layerThickness/2.,
+    fTOFConst::layerThickness/2.,
     sector.height/2.
     );
 
@@ -341,6 +341,8 @@ G4VPhysicalVolume* fTOF_DetectorConstruction::Construct()
 
 
   G4LogicalVolume *fullBarLog = new G4LogicalVolume(trapeze,bigBox.material,"quartzBar");
+
+  G4LogicalVolume *absLayer = new G4LogicalVolume(trapeze1,world.material,"absLayer");
 
   G4LogicalVolume *absorber = new G4LogicalVolume(absTrd,bigBox.material,"absorber");
 
@@ -418,6 +420,64 @@ G4VPhysicalVolume* fTOF_DetectorConstruction::Construct()
 
     /////////// outer detector ///////
     Ta = G4ThreeVector(0.,0.,0.);
+    Ra = G4RotationMatrix(); 
+
+    Ra.rotateY(- 360./fTOFConst::nSec*i *deg + 90.*deg);
+    Ta.setX((fTOFConst::outerRad*TMath::Cos(TMath::Pi() / fTOFConst::nSec) + 5*mm) * TMath::Cos(360./fTOFConst::nSec*i *deg));
+    Ta.setZ((fTOFConst::outerRad*TMath::Cos(TMath::Pi() / fTOFConst::nSec) + 5*mm) * TMath::Sin(360./fTOFConst::nSec*i *deg));
+    Tr = G4Transform3D(Ra,Ta);
+    secAssembly->AddPlacedVolume(rightLogical,Tr);
+
+    ///////// layer absorber ////////
+    Ta = G4ThreeVector(0.,sector.thickness/2. + fTOFConst::layerDist/2.,0.);
+    Ra = G4RotationMatrix(); 
+
+    Ra.rotateY(- 360./fTOFConst::nSec*i *deg + 90.*deg);
+    Ta.setX(fTOFConst::centerRad * TMath::Cos(360./fTOFConst::nSec*i *deg));
+    Ta.setZ(fTOFConst::centerRad * TMath::Sin(360./fTOFConst::nSec*i *deg));
+    Tr = G4Transform3D(Ra,Ta);
+    secAssembly->AddPlacedVolume(absLayer,Tr);
+  }
+
+
+
+  for (int j = 0; j < fTOFConst::nSec; ++j) { G4double i = j + 0.5; 
+    /////////// sector /////////////
+
+
+    Ta = G4ThreeVector(0., sector.thickness + fTOFConst::layerDist + fTOFConst::layerThickness ,0.);
+    Ra = G4RotationMatrix(); 
+
+    Ra.rotateY(- 360./fTOFConst::nSec*i *deg + 90.*deg);
+    Ta.setX(fTOFConst::centerRad * TMath::Cos(360./fTOFConst::nSec*i *deg));
+    Ta.setZ(fTOFConst::centerRad * TMath::Sin(360./fTOFConst::nSec*i *deg));
+    Tr = G4Transform3D(Ra,Ta);
+    secAssembly->AddPlacedVolume(fullBarLog,Tr);
+
+    ////////// absorber /////////////
+    Ta = G4ThreeVector(0.,sector.thickness + fTOFConst::layerDist+ fTOFConst::layerThickness,0.);
+    Ra = G4RotationMatrix(); 
+
+    Ra.rotateY(- 360./fTOFConst::nSec*(i+0.5) *deg + 90.*deg);
+    Ta.setX((fTOFConst::innerRad + fTOFConst::outerRad)/2. 
+            * TMath::Cos(360./fTOFConst::nSec*(i+0.5) *deg));
+    Ta.setZ((fTOFConst::innerRad + fTOFConst::outerRad)/2. 
+            * TMath::Sin(360./fTOFConst::nSec*(i+0.5) *deg));
+    Tr = G4Transform3D(Ra,Ta);
+    secAssembly->AddPlacedVolume(absorber,Tr);
+
+    ///////// inner abs /////////////
+    Ta = G4ThreeVector(0.,sector.thickness + fTOFConst::layerDist+ fTOFConst::layerThickness,0.);
+    Ra = G4RotationMatrix(); 
+
+    Ra.rotateY(- 360./fTOFConst::nSec*i *deg + 90.*deg);
+    Ta.setX((fTOFConst::innerRad*TMath::Cos(TMath::Pi() / fTOFConst::nSec) - 5*mm) * TMath::Cos(360./fTOFConst::nSec*i *deg));
+    Ta.setZ((fTOFConst::innerRad*TMath::Cos(TMath::Pi() / fTOFConst::nSec) - 5*mm) * TMath::Sin(360./fTOFConst::nSec*i *deg));
+    Tr = G4Transform3D(Ra,Ta);
+    secAssembly->AddPlacedVolume(leftLogical,Tr);
+
+    /////////// outer detector ///////
+    Ta = G4ThreeVector(0.,sector.thickness + fTOFConst::layerDist+ fTOFConst::layerThickness,0.);
     Ra = G4RotationMatrix(); 
 
     Ra.rotateY(- 360./fTOFConst::nSec*i *deg + 90.*deg);
@@ -739,6 +799,9 @@ Ra = G4RotationMatrix();
 
   new G4LogicalSkinSurface("AbsTrdSurface", 
         absorber, OpVolumeKillSurface);
+
+    new G4LogicalSkinSurface("AbsTrdSurface", 
+        absLayer, OpVolumeKillSurface);
 
 
   new G4LogicalSkinSurface("SensitiveSurfaceLeft", 
