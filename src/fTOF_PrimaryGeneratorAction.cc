@@ -113,7 +113,7 @@ void fTOF_PrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
   //dX = std::sin(_ThetaAngle)*std::sin(_PhiAngle);
   //dZ = std::sin(_ThetaAngle)*std::cos(_PhiAngle);
   //dY = std::cos(_ThetaAngle);
-  dX =  3.;
+  dX =  0.;
   dZ =  -130.;
   dY =  -70.0;
   G4ThreeVector dir(dX, dY, dZ);

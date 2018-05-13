@@ -351,6 +351,28 @@ G4VPhysicalVolume* fTOF_DetectorConstruction::Construct()
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
+
+  G4Box *leftVol = new G4Box("leftVol",
+    sector.shortSide/2.,
+    sector.thickness/2.,
+    5.*mm
+    );
+
+  G4LogicalVolume *leftLogical = new G4LogicalVolume(leftVol, 
+        bigBox.material,"leftLogical");
+
+
+  G4Box *rightVol = new G4Box("rightVol",
+    sector.longSide/2.,
+    sector.thickness/2.,
+    5*mm
+    );
+
+  G4LogicalVolume *rightLogical = new G4LogicalVolume(rightVol, 
+        bigBox.material,"rightLogical");
+
+
+
   
   //-------------------------------------------------------
 
@@ -358,9 +380,11 @@ G4VPhysicalVolume* fTOF_DetectorConstruction::Construct()
 
   //--------------------------------------------------------
 
-
+  std::cout << "Short side = " << fTOFConst::innerSide/cm << " cm" << std::endl
+            << "Long side = "  << fTOFConst::outerSide/cm << " cm" << std::endl;
 
   for (int i = 0; i < fTOFConst::nSec; ++i) {
+    /////////// sector /////////////
     Ta = G4ThreeVector(0.,0.,0.);
     Ra = G4RotationMatrix(); 
 
@@ -370,6 +394,7 @@ G4VPhysicalVolume* fTOF_DetectorConstruction::Construct()
     Tr = G4Transform3D(Ra,Ta);
     secAssembly->AddPlacedVolume(fullBarLog,Tr);
 
+    ////////// absorber /////////////
     Ta = G4ThreeVector(0.,0.,0.);
     Ra = G4RotationMatrix(); 
 
@@ -380,6 +405,26 @@ G4VPhysicalVolume* fTOF_DetectorConstruction::Construct()
             * TMath::Sin(360./fTOFConst::nSec*(i+0.5) *deg));
     Tr = G4Transform3D(Ra,Ta);
     secAssembly->AddPlacedVolume(absorber,Tr);
+
+    ///////// inner abs /////////////
+    Ta = G4ThreeVector(0.,0.,0.);
+    Ra = G4RotationMatrix(); 
+
+    Ra.rotateY(- 360./fTOFConst::nSec*i *deg + 90.*deg);
+    Ta.setX((fTOFConst::innerRad*TMath::Cos(TMath::Pi() / fTOFConst::nSec) - 5*mm) * TMath::Cos(360./fTOFConst::nSec*i *deg));
+    Ta.setZ((fTOFConst::innerRad*TMath::Cos(TMath::Pi() / fTOFConst::nSec) - 5*mm) * TMath::Sin(360./fTOFConst::nSec*i *deg));
+    Tr = G4Transform3D(Ra,Ta);
+    secAssembly->AddPlacedVolume(leftLogical,Tr);
+
+    /////////// outer detector ///////
+    Ta = G4ThreeVector(0.,0.,0.);
+    Ra = G4RotationMatrix(); 
+
+    Ra.rotateY(- 360./fTOFConst::nSec*i *deg + 90.*deg);
+    Ta.setX((fTOFConst::outerRad*TMath::Cos(TMath::Pi() / fTOFConst::nSec) - 5*mm) * TMath::Cos(360./fTOFConst::nSec*i *deg));
+    Ta.setZ((fTOFConst::outerRad*TMath::Cos(TMath::Pi() / fTOFConst::nSec) - 5*mm) * TMath::Sin(360./fTOFConst::nSec*i *deg));
+    Tr = G4Transform3D(Ra,Ta);
+    secAssembly->AddPlacedVolume(rightLogical,Tr);
   }
 
 
@@ -447,21 +492,7 @@ G4VPhysicalVolume* fTOF_DetectorConstruction::Construct()
   //////////////////////////// kill volumes ////////////////////////////////
 
 
-  G4Box *leftVol = new G4Box("leftVol",
-    sector.shortSide/2.,
-    sector.thickness/2.,
-    5.*mm
-    );
 
-  G4LogicalVolume *leftLogical = new G4LogicalVolume(leftVol, 
-        bigBox.material,"leftLogical");
-  Ra = G4RotationMatrix(); 
-    Ta.setZ(-sector.height/2.  - 4.999*mm);
-    Ta.setX(0.);
-    Ta.setY(0);
-    Tr = G4Transform3D(Ra, Ta);
-
-  // secAssembly->AddPlacedVolume(leftLogical, Tr);
 
 
 
@@ -490,21 +521,6 @@ G4VPhysicalVolume* fTOF_DetectorConstruction::Construct()
 
 
 
-
-  G4Box *rightVol = new G4Box("rightVol",
-    sector.longSide/2.,
-    sector.thickness/2.,
-    5*mm
-    );
-
-  Ra = G4RotationMatrix(); 
-  Ta.setZ(sector.height/2. + 4.999*mm);
-  Ta.setY(0.);
-  Ta.setX(0.);
-  Tr = G4Transform3D(Ra, Ta);
-  G4LogicalVolume *rightLogical = new G4LogicalVolume(rightVol, 
-        bigBox.material,"rightLogical");
-  // secAssembly->AddPlacedVolume(rightLogical, Tr);
 
   Ra = G4RotationMatrix(); 
   Ta.setZ(sector.height/2. + 4.999*mm);
