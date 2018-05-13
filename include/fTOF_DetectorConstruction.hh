@@ -49,6 +49,8 @@ private:
   TrapezeSectorStruct sector;
   TrapezeMixerStruct mixer;
 
+  TrapezeAbsStruct abs;
+
 
  // mcp pmt's 11.04.18
   HamPmtWindowStruct hamWin;

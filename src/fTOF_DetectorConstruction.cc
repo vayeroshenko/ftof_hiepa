@@ -270,12 +270,6 @@ G4VPhysicalVolume* fTOF_DetectorConstruction::Construct()
 
 
 
-
-  //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-  /////////////////////////////////////////////////////// fTOF substraction 12.04.18 //////////////////////////////////////////////////////
-
-
   G4RotationMatrix Ra = G4RotationMatrix();
   G4ThreeVector Ta = G4ThreeVector();
   G4Transform3D Tr;
@@ -305,12 +299,12 @@ G4VPhysicalVolume* fTOF_DetectorConstruction::Construct()
 
 
   G4Trd *absTrd = new G4Trd(
-    "trapeze2",
-    sector.shortSide/2.,
-    sector.longSide/2.,
-    0.1*mm,
-    0.1*mm,
-    sector.height/2.
+    "absorber",
+    abs.shortSide/2.,
+    abs.longSide/2.,
+    abs.thickness/2.,
+    abs.thickness/2.,
+    abs.height/2.
     );
 
 
@@ -364,11 +358,26 @@ G4VPhysicalVolume* fTOF_DetectorConstruction::Construct()
 
 
 
+  for (int i = 0; i < fTOFConst::nSec; ++i) {
+    Ta = G4ThreeVector(0.,0.,0.);
+    Ra = G4RotationMatrix(); 
+
+    Ra.rotateY(- 360./fTOFConst::nSec*i *deg + 90.*deg);
+    Ta.setX(fTOFConst::centerRad * TMath::Cos(360./fTOFConst::nSec*i *deg));
+    Ta.setZ(fTOFConst::centerRad * TMath::Sin(360./fTOFConst::nSec*i *deg));
+    Tr = G4Transform3D(Ra,Ta);
+    secAssembly->AddPlacedVolume(fullBarLog,Tr);
+
+  }
+
+
+
+
   Ta = G4ThreeVector(0.,0.,0.);
   // Ta.setY(sector.thickness/2. + 0.5*mm);
   Ra = G4RotationMatrix(); 
   Tr = G4Transform3D(Ra,Ta);
-  secAssembly->AddPlacedVolume(fullBarLog,Tr);
+  // secAssembly->AddPlacedVolume(fullBarLog,Tr);
 
   Ta = G4ThreeVector(0.,0.,0.);
   Ta.setY(-sector.thickness/2.-0.5*mm);
@@ -420,68 +429,6 @@ G4VPhysicalVolume* fTOF_DetectorConstruction::Construct()
   G4int j = 0;
   Ra = G4RotationMatrix(); 
 
-  // for( i=0; i<4; i++){                       ///////////////////// hamamatsu 11.04.18 //////////////////////////////////////////////////////////////////////
-  //   //add sensitive
-  //   for ( j=0; j<4; j++){
-  //     Ta.setX(bigBox.sizeX/2.0 + hamWin.sizeX + hamChan.sizeX/2.);
-  //     Ta.setY((fTOFConst::hamChanGap/2.+hamChan.sizeY/2.)*(2*j-3));
-  //     Ta.setZ( 1.5*hamChan.sizeZ + 1.5*fTOFConst::hamChanGap - (fTOFConst::hamChanGap+hamChan.sizeZ)*i);
-  //     Tr = G4Transform3D(Ra, Ta);
-  //     // secAssembly->AddPlacedVolume(hamChan.logical, Tr);
-  //   }
-  // }
-
-  // for( i=0; i<4; i++){                       ///////////////////// planacon 11.04.18 //////////////////////////////////////////////////////////////////////
-  //   //add sensitive
-  //   Ta.setX(-(bigBox.sizeX/2.0 + hamWin.sizeX + hamChan.sizeX/2.));
-  //   Ta.setY(planChan.sizeY/2.);
-  //   Ta.setZ( 1.5*planChan.sizeZ - (planChan.sizeZ)*i);
-  //   Tr = G4Transform3D(Ra, Ta);
-  //   // secAssembly->AddPlacedVolume(planChan.logical, Tr);
-  // }
-
-  // for( i=0; i<4; i++){                       ///////////////////// planacon 11.04.18 
-  //   //add sensitive
-  //   Ta.setX(-(bigBox.sizeX/2.0  + hamWin.sizeX + hamChan.sizeX/2.));
-  //   Ta.setY(-planChan.sizeY/2.);
-  //   Ta.setZ( 1.5*planChan.sizeZ - (planChan.sizeZ)*i);
-  //   Tr = G4Transform3D(Ra, Ta);
-  //   // secAssembly->AddPlacedVolume(planChan.logical, Tr);
-  // }                                                                           ////////////////// 10.04.18
-
-
-
-
-for( i=0; i<4; i++){                       ///////////////////// hamamatsu 11.04.18 //////////////////////////////////////////////////////////////////////
-    //add sensitive
-    for ( j=0; j<4; j++){
-      Ta.setX(bigBox.sizeX/2.0 + hamChan.sizeX/2. -0.1*mm);
-      Ta.setY((fTOFConst::hamChanGap/2.+hamChan.sizeY/2.)*(2*j-3));
-      Ta.setZ( 1.5*hamChan.sizeZ + 1.5*fTOFConst::hamChanGap - (fTOFConst::hamChanGap+hamChan.sizeZ)*i);
-      Tr = G4Transform3D(Ra, Ta);
-      // secAssembly->AddPlacedVolume(hamChan.logical, Tr);
-    }
-  }
-
-  for( i=0; i<4; i++){                       ///////////////////// planacon 11.04.18 //////////////////////////////////////////////////////////////////////
-    //add sensitive
-    Ta.setX(-(bigBox.sizeX/2.0 + hamChan.sizeX/2.)+0.1*mm);
-    Ta.setY(planChan.sizeY/2.);
-    Ta.setZ( 1.5*planChan.sizeZ - (planChan.sizeZ)*i);
-    Tr = G4Transform3D(Ra, Ta);
-    // secAssembly->AddPlacedVolume(planChan.logical, Tr);
-  }
-
-  for( i=0; i<4; i++){                       ///////////////////// planacon 11.04.18 
-    //add sensitive
-    Ta.setX(-(bigBox.sizeX/2.0  + hamChan.sizeX/2.)+0.1*mm);
-    Ta.setY(-planChan.sizeY/2.);
-    Ta.setZ( 1.5*planChan.sizeZ - (planChan.sizeZ)*i);
-    Tr = G4Transform3D(Ra, Ta);
-    // secAssembly->AddPlacedVolume(planChan.logical, Tr);
-  }                                                                           ////////////////// 10.04.18
-
-
 
 
 
@@ -502,7 +449,7 @@ for( i=0; i<4; i++){                       ///////////////////// hamamatsu 11.04
     Ta.setY(0);
     Tr = G4Transform3D(Ra, Ta);
 
-  secAssembly->AddPlacedVolume(leftLogical, Tr);
+  // secAssembly->AddPlacedVolume(leftLogical, Tr);
 
 
 
@@ -545,7 +492,7 @@ for( i=0; i<4; i++){                       ///////////////////// hamamatsu 11.04
   Tr = G4Transform3D(Ra, Ta);
   G4LogicalVolume *rightLogical = new G4LogicalVolume(rightVol, 
         bigBox.material,"rightLogical");
-  secAssembly->AddPlacedVolume(rightLogical, Tr);
+  // secAssembly->AddPlacedVolume(rightLogical, Tr);
 
   Ra = G4RotationMatrix(); 
   Ta.setZ(sector.height/2. + 4.999*mm);
@@ -608,7 +555,7 @@ Ra = G4RotationMatrix();
 
   G4LogicalVolume *frontLogical = new G4LogicalVolume(frontVol, 
         bigBox.material,"frontLogical");
-  secAssembly->AddPlacedVolume(frontLogical, Tr);
+  // secAssembly->AddPlacedVolume(frontLogical, Tr);
 
 
   G4Box *backVol = new G4Box("backVol",
@@ -625,7 +572,7 @@ Ra = G4RotationMatrix();
   Tr = G4Transform3D(Ra, Ta);
   G4LogicalVolume *backLogical = new G4LogicalVolume(backVol, 
         bigBox.material,"backLogical");
-  secAssembly->AddPlacedVolume(backLogical, Tr);
+  // secAssembly->AddPlacedVolume(backLogical, Tr);
 
 
 

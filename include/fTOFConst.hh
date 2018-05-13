@@ -120,17 +120,23 @@ namespace fTOFConst{
   const G4double mixerLength = 15.*cm;
 
 
+  const G4int nSec = 13;
 
   const G4double innerRad = 47.*cm;
   const G4double outerRad = 105.*cm;
+  const G4double centerRad = (innerRad * TMath::Cos(TMath::Pi() / nSec) +
+                              outerRad * TMath::Cos(TMath::Pi() / nSec)) / 2.;
 
-  const G4int nSec = 100;
+  
 
   const G4double innerSide = 2. * innerRad * TMath::Sin(TMath::Pi() / nSec);
   const G4double outerSide = 2. * outerRad * TMath::Sin(TMath::Pi() / nSec);
 
-  const G4double absInnnerSide = 0.01*mm;
-  const G4double absOuterSide = absInnnerSide * outerRad / innerRad;
+
+  const G4double absInnerSide = 0.01*mm;
+  const G4double absOuterSide = absInnerSide * outerRad / innerRad;
+
+
 
 
 
