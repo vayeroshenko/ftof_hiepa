@@ -185,8 +185,9 @@ struct TrapezeAbsStruct: VolumeStruct {
   TrapezeAbsStruct():
     shortSide(fTOFConst::absInnerSide),
     longSide(fTOFConst::absOuterSide),
-    thickness(fTOFConst::sectorThickness),
-    height(fTOFConst::outerRad - fTOFConst::innerRad),
+    thickness(fTOFConst::sectorThickness*2.),
+    height(fTOFConst::outerRad -
+           fTOFConst::innerRad),
     angle(atan((longSide-shortSide)/2./height)),
     sides(sqrt(height*height + (longSide-shortSide)*(longSide-shortSide)/4.)),
     middleLine((longSide+shortSide)/2.)

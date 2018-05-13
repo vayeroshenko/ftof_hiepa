@@ -342,6 +342,8 @@ G4VPhysicalVolume* fTOF_DetectorConstruction::Construct()
 
   G4LogicalVolume *fullBarLog = new G4LogicalVolume(trapeze,bigBox.material,"quartzBar");
 
+  G4LogicalVolume *absorber = new G4LogicalVolume(absTrd,bigBox.material,"absorber");
+
   G4LogicalVolume *fullBarLog1 = new G4LogicalVolume(trapeze1,bigBox.material,"quartzBar1");
 
   G4LogicalVolume *mixerLog = new G4LogicalVolume(mixerTrd,bigBox.material,"mixer");
@@ -368,6 +370,16 @@ G4VPhysicalVolume* fTOF_DetectorConstruction::Construct()
     Tr = G4Transform3D(Ra,Ta);
     secAssembly->AddPlacedVolume(fullBarLog,Tr);
 
+    Ta = G4ThreeVector(0.,0.,0.);
+    Ra = G4RotationMatrix(); 
+
+    Ra.rotateY(- 360./fTOFConst::nSec*(i+0.5) *deg + 90.*deg);
+    Ta.setX((fTOFConst::innerRad + fTOFConst::outerRad)/2. 
+            * TMath::Cos(360./fTOFConst::nSec*(i+0.5) *deg));
+    Ta.setZ((fTOFConst::innerRad + fTOFConst::outerRad)/2. 
+            * TMath::Sin(360./fTOFConst::nSec*(i+0.5) *deg));
+    Tr = G4Transform3D(Ra,Ta);
+    secAssembly->AddPlacedVolume(absorber,Tr);
   }
 
 
@@ -709,6 +721,8 @@ Ra = G4RotationMatrix();
   new G4LogicalSkinSurface("AbsTrdSurface", 
         absLog, OpVolumeKillSurface);
 
+  new G4LogicalSkinSurface("AbsTrdSurface", 
+        absorber, OpVolumeKillSurface);
 
 
   new G4LogicalSkinSurface("SensitiveSurfaceLeft", 

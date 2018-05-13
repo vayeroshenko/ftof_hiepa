@@ -99,8 +99,8 @@ void fTOF_PrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
   //yInit = _muonGen->GetY()*cm;
   //zInit = _muonGen->GetZ()*cm;
   xInit = 0.0*mm;
-  yInit = 30.0*cm;
-  zInit = 250*cm;             /////////////////////////////////////////////////////////////////
+  yInit = 0.0*cm;
+  zInit = 130*cm;             /////////////////////////////////////////////////////////////////
   ///////////////////////
   _BunchXID++;
   particle = particleTable->FindParticle(_particleName);
@@ -113,9 +113,9 @@ void fTOF_PrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
   //dX = std::sin(_ThetaAngle)*std::sin(_PhiAngle);
   //dZ = std::sin(_ThetaAngle)*std::cos(_PhiAngle);
   //dY = std::cos(_ThetaAngle);
-  dX =  0.;
-  dZ =  -250.;
-  dY =  -30.0;
+  dX =  3.;
+  dZ =  -130.;
+  dY =  -70.0;
   G4ThreeVector dir(dX, dY, dZ);
   _particleGun->SetParticleDefinition(particle);
   _particleGun->SetParticleMomentumDirection(dir);
