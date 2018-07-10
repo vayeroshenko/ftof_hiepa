@@ -385,7 +385,7 @@ G4VPhysicalVolume* fTOF_DetectorConstruction::Construct()
   std::cout << "Short side = " << fTOFConst::innerSide/cm << " cm" << std::endl
             << "Long side = "  << fTOFConst::outerSide/cm << " cm" << std::endl;
 
-
+// one sector to be done
 
   for (int l = 0; l < fTOFConst::nLayers; ++l ){
     for (int j = 0; j < fTOFConst::nSec; ++j) {
