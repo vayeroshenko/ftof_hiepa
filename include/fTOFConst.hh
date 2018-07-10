@@ -121,9 +121,9 @@ namespace fTOFConst{
 
 
   const G4int nSec = 101;
+  const G4int nDrawSec = 1;
 
-  const G4int nLayers = 2;
-
+  const G4int nLayers = 1;
 
   const G4double innerRad = 47.*cm;
   const G4double outerRad = 105.*cm;
