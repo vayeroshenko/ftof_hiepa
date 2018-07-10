@@ -408,17 +408,19 @@ G4VPhysicalVolume* fTOF_DetectorConstruction::Construct()
 
       ////////// absorber /////////////
 
-//      Ta = G4ThreeVector(0.,0.,0.);
-//      Ra = G4RotationMatrix();
-//
-//      Ra.rotateY(- 360./fTOFConst::nSec*(i+0.5) *deg + 90.*deg);
-//      Ta.setX((fTOFConst::innerRad + fTOFConst::outerRad)/2.
-//              * TMath::Cos(360./fTOFConst::nSec*(i+0.5) *deg));
-//      Ta.setY(dist);
-//      Ta.setZ((fTOFConst::innerRad + fTOFConst::outerRad)/2.
-//              * TMath::Sin(360./fTOFConst::nSec*(i+0.5) *deg));
-//      Tr = G4Transform3D(Ra,Ta);
-//      secAssembly->AddPlacedVolume(absorber,Tr);
+      if (j < fTOFConst::nDrawSec || j == fTOFConst::nSec - 1) {
+		  Ta = G4ThreeVector(0.,0.,0.);
+		  Ra = G4RotationMatrix();
+
+		  Ra.rotateY(- 360./fTOFConst::nSec*(i+0.5) *deg + 90.*deg);
+		  Ta.setX((fTOFConst::innerRad + fTOFConst::outerRad)/2.
+				  * TMath::Cos(360./fTOFConst::nSec*(i+0.5) *deg));
+		  Ta.setY(dist);
+		  Ta.setZ((fTOFConst::innerRad + fTOFConst::outerRad)/2.
+				  * TMath::Sin(360./fTOFConst::nSec*(i+0.5) *deg));
+		  Tr = G4Transform3D(Ra,Ta);
+		  secAssembly->AddPlacedVolume(absorber,Tr);
+      }
 
       ///////// inner abs /////////////
 
@@ -706,7 +708,9 @@ Ra = G4RotationMatrix();
   //
 
   Ra = G4RotationMatrix();
+  Ra.rotateY(270.0*deg);
   Ra.rotateX(90.0*deg);
+
   Ta.setX(0.);
   Ta.setY(0.);
   Ta.setZ(0.);

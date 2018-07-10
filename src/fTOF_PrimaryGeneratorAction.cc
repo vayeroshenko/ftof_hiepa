@@ -84,44 +84,102 @@ void fTOF_PrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
   _particleGun->SetParticlePosition(G4ThreeVector(xInit, yInit, zInit));
   _particleGun->GeneratePrimaryVertex(anEvent);
   */
+//
+//  ////////////////////////
+//  //_particleName = "kaon-";
+//  //_particleMomentum = 1500.0*MeV;
+//  _particleMomentum = 2.*GeV;           ////////////////////////////////// particle momentum
+//  //_particleMomentum = 400.0*MeV;
+//  _muonGen->GenerateMuon((crtConst::hodo_hight+0.5));
+//  //_muonGen->GenerateMuon((83.0 + 38.1 + 30.0));
+//  //_muonGen->GenerateMuon((84.0 + 40 + 10));
+//  _ThetaAngle = _muonGen->GetTheta()*deg;
+//  _PhiAngle = _muonGen->GetPhi()*deg;
+//  //xInit = _muonGen->GetX()*cm;
+//  //yInit = _muonGen->GetY()*cm;
+//  //zInit = _muonGen->GetZ()*cm;
+//  xInit = 0.0*mm;
+//  yInit = 0.0*cm;
+//  zInit = 130*cm;             /////////////////////////////////////////////////////////////////
+//
+//  ///////////////////////
+//  _BunchXID++;
+//  particle = particleTable->FindParticle(_particleName);
+//  m = particle->GetPDGMass();
+//  Ekin = (TMath::Sqrt(_particleMomentum*_particleMomentum
+//		      + m*m) - m);
+//  ////dX = std::sin(_ThetaAngle)*std::cos(_PhiAngle);
+//  ////dY = std::sin(_ThetaAngle)*std::sin(_PhiAngle);
+//  ////dZ = std::cos(_ThetaAngle);
+//  //dX = std::sin(_ThetaAngle)*std::sin(_PhiAngle);
+//  //dZ = std::sin(_ThetaAngle)*std::cos(_PhiAngle);
+//  //dY = std::cos(_ThetaAngle);
+//  dX =  0.;
+//  dZ =  -130.;
+//  dY =  -70.0;
+//  G4ThreeVector dir(dX, dY, dZ);
+//  _particleGun->SetParticleDefinition(particle);
+//  _particleGun->SetParticleMomentumDirection(dir);
+//  _particleGun->SetParticleEnergy(Ekin);
+//  _particleGun->SetParticlePosition(G4ThreeVector(xInit, yInit, zInit));
+//  _particleGun->GeneratePrimaryVertex(anEvent);
 
-  ////////////////////////
-  //_particleName = "kaon-";
-  //_particleMomentum = 1500.0*MeV;
-  _particleMomentum = 2.*GeV;           ////////////////////////////////// particle momentum
-  //_particleMomentum = 400.0*MeV;
-  _muonGen->GenerateMuon((crtConst::hodo_hight+0.5));
-  //_muonGen->GenerateMuon((83.0 + 38.1 + 30.0));
-  //_muonGen->GenerateMuon((84.0 + 40 + 10));
-  _ThetaAngle = _muonGen->GetTheta()*deg;
-  _PhiAngle = _muonGen->GetPhi()*deg;
-  //xInit = _muonGen->GetX()*cm;
-  //yInit = _muonGen->GetY()*cm;
-  //zInit = _muonGen->GetZ()*cm;
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+  ///////////////////////////// kaon
+  _particleName = "kaon-";
+  _particleMomentum = 2.*GeV;
+
   xInit = 0.0*mm;
   yInit = 0.0*cm;
-  zInit = 130*cm;             /////////////////////////////////////////////////////////////////
-  ///////////////////////
+  zInit = 130*cm;
+
+
   _BunchXID++;
   particle = particleTable->FindParticle(_particleName);
   m = particle->GetPDGMass();
-  Ekin = (TMath::Sqrt(_particleMomentum*_particleMomentum 
+  Ekin = (TMath::Sqrt(_particleMomentum*_particleMomentum
 		      + m*m) - m);
-  ////dX = std::sin(_ThetaAngle)*std::cos(_PhiAngle);
-  ////dY = std::sin(_ThetaAngle)*std::sin(_PhiAngle);
-  ////dZ = std::cos(_ThetaAngle);
-  //dX = std::sin(_ThetaAngle)*std::sin(_PhiAngle);
-  //dZ = std::sin(_ThetaAngle)*std::cos(_PhiAngle);
-  //dY = std::cos(_ThetaAngle);
   dX =  0.;
   dZ =  -130.;
   dY =  -70.0;
   G4ThreeVector dir(dX, dY, dZ);
   _particleGun->SetParticleDefinition(particle);
   _particleGun->SetParticleMomentumDirection(dir);
-  _particleGun->SetParticleEnergy(Ekin);  
+  _particleGun->SetParticleEnergy(Ekin);
   _particleGun->SetParticlePosition(G4ThreeVector(xInit, yInit, zInit));
   _particleGun->GeneratePrimaryVertex(anEvent);
+
+
+  ///////////////////////////////////// pion
+  _particleName = "pi-";
+  _particleMomentum = 2.*GeV;
+
+  xInit = 0.0*mm;
+  yInit = 0.0*cm;
+  zInit = 130*cm;
+
+
+  _BunchXID++;
+  particle = particleTable->FindParticle(_particleName);
+  m = particle->GetPDGMass();
+  Ekin = (TMath::Sqrt(_particleMomentum*_particleMomentum
+		      + m*m) - m);
+  dX =  0.;
+  dZ =  -130.;
+  dY =  -70.0;
+  dir = G4ThreeVector(dX, dY, dZ);
+  _particleGun->SetParticleDefinition(particle);
+  _particleGun->SetParticleMomentumDirection(dir);
+  _particleGun->SetParticleEnergy(Ekin);
+  _particleGun->SetParticlePosition(G4ThreeVector(xInit, yInit, zInit));
+  _particleGun->GeneratePrimaryVertex(anEvent);
+
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
 
 
   /*
