@@ -152,128 +152,33 @@ void fTOF_PrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
 
 
   ///////////////////////////////////// pion
-  _particleName = "pi-";
-  _particleMomentum = 2.*GeV;
-
-  xInit = 0.0*mm;
-  yInit = 0.0*cm;
-  zInit = 130*cm;
-
-
-  _BunchXID++;
-  particle = particleTable->FindParticle(_particleName);
-  m = particle->GetPDGMass();
-  Ekin = (TMath::Sqrt(_particleMomentum*_particleMomentum
-		      + m*m) - m);
-  dX =  0.;
-  dZ =  -130.;
-  dY =  -70.0;
-  dir = G4ThreeVector(dX, dY, dZ);
-  _particleGun->SetParticleDefinition(particle);
-  _particleGun->SetParticleMomentumDirection(dir);
-  _particleGun->SetParticleEnergy(Ekin);
-  _particleGun->SetParticlePosition(G4ThreeVector(xInit, yInit, zInit));
-  _particleGun->GeneratePrimaryVertex(anEvent);
+//  _particleName = "pi-";
+//  _particleMomentum = 2.*GeV;
+//
+//  xInit = 0.0*mm;
+//  yInit = 0.0*cm;
+//  zInit = 130*cm;
+//
+//
+//  _BunchXID++;
+//  particle = particleTable->FindParticle(_particleName);
+//  m = particle->GetPDGMass();
+//  Ekin = (TMath::Sqrt(_particleMomentum*_particleMomentum
+//		      + m*m) - m);
+//  dX =  0.;
+//  dZ =  -130.;
+//  dY =  -70.0;
+//  dir = G4ThreeVector(dX, dY, dZ);
+//  _particleGun->SetParticleDefinition(particle);
+//  _particleGun->SetParticleMomentumDirection(dir);
+//  _particleGun->SetParticleEnergy(Ekin);
+//  _particleGun->SetParticlePosition(G4ThreeVector(xInit, yInit, zInit));
+//  _particleGun->GeneratePrimaryVertex(anEvent);
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-
-
-
-  /*
-  ////////////////////////
-  //_particleName = "kaon-";
-  _particleMomentum = 100.0*MeV;
-  _ThetaAngle = 180.0*deg;
-  _PhiAngle = 180.0*deg;
-  xInit = 0.0*cm;
-  yInit = 0.0*cm;
-  zInit = (crtConst::hodo_hight)*cm;    
-  //xInit = 0.0*cm;
-  //yInit = 0.0*cm;
-  //zInit = 0.0*cm;    
-  ///////////////////////
-  _BunchXID++;
-  particle = particleTable->FindParticle(_particleName);
-  m = particle->GetPDGMass();
-  Ekin = (TMath::Sqrt(_particleMomentum*_particleMomentum 
-		      + m*m) - m);
-  //dX = std::sin(_ThetaAngle)*std::cos(_PhiAngle);
-  //dY = std::sin(_ThetaAngle)*std::sin(_PhiAngle);
-  //dZ = std::cos(_ThetaAngle);
-  dX = std::sin(_ThetaAngle)*std::sin(_PhiAngle);
-  dZ = std::sin(_ThetaAngle)*std::cos(_PhiAngle);
-  dY = std::cos(_ThetaAngle);
-  //G4ThreeVector dir(dX, dY, dZ);
-  G4ThreeVector dir(0.0, 0.0, -1.0);
-  _particleGun->SetParticleDefinition(particle);
-  _particleGun->SetParticleMomentumDirection(dir);
-  _particleGun->SetParticleEnergy(Ekin);  
-  _particleGun->SetParticlePosition(G4ThreeVector(xInit, yInit, zInit));
-  _particleGun->GeneratePrimaryVertex(anEvent);
-  */
-
-  /*
-  ////////////////////////
-  //_particleName = "kaon-";
-  _particleMomentum = 3000.0*MeV;
-  _ThetaAngle = 20.0*deg;
-  _PhiAngle = 2.0*TMath::Pi()*(G4UniformRand())*rad;
-  xInit = 0.0*cm;
-  yInit = 0.0*cm;
-  zInit = 0.0*cm;    
-  ///////////////////////
-  _BunchXID++;
-  particle = particleTable->FindParticle(_particleName);
-  pdgID = particle->GetPDGEncoding();
-  m = particle->GetPDGMass();
-  Ekin = (TMath::Sqrt(_particleMomentum*_particleMomentum 
-		      + m*m) - m);
-  dX = std::sin(_ThetaAngle)*std::cos(_PhiAngle);
-  dY = std::sin(_ThetaAngle)*std::sin(_PhiAngle);
-  dZ = std::cos(_ThetaAngle);
-  G4ThreeVector dir(dX, dY, dZ);
-  _particleGun->SetParticleDefinition(particle);
-  _particleGun->SetParticleMomentumDirection(dir);
-  _particleGun->SetParticleEnergy(Ekin);  
-  _particleGun->SetParticlePosition(G4ThreeVector(xInit, yInit, zInit));
-  _particleGun->GeneratePrimaryVertex(anEvent);
-  */
-
-  /*
-  ////////////////////////
-  //_particleName = "kaon-";
-  G4double  momentumMin = 0.700*GeV;
-  G4double  momentumMax = 0.701*GeV;
-  G4double  thetaAngleMin = 15.0*deg;
-  G4double  thetaAngleMax = 25.0*deg;
-  G4double  phiAngleMin = 0.0*deg;
-  G4double  phiAngleMax = 360.0*deg;  
-  _particleMomentum = (momentumMax - momentumMin)*G4UniformRand() + momentumMin;
-  _ThetaAngle = (thetaAngleMax - thetaAngleMin)*G4UniformRand() + thetaAngleMin;
-  _PhiAngle = (phiAngleMax - phiAngleMin)*G4UniformRand() + phiAngleMin;
-  xInit = 0.0*cm;
-  yInit = 0.0*cm;
-  zInit = 0.0*cm;    
-  ///////////////////////
-  _BunchXID++;
-  particle = particleTable->FindParticle(_particleName);
-  pdgID = particle->GetPDGEncoding();
-  m = particle->GetPDGMass();
-  Ekin = (TMath::Sqrt(_particleMomentum*_particleMomentum 
-		      + m*m) - m);
-  dX = std::sin(_ThetaAngle)*std::cos(_PhiAngle);
-  dY = std::sin(_ThetaAngle)*std::sin(_PhiAngle);
-  dZ = std::cos(_ThetaAngle);
-  G4ThreeVector dir(dX, dY, dZ);
-  _particleGun->SetParticleDefinition(particle);
-  _particleGun->SetParticleMomentumDirection(dir);
-  _particleGun->SetParticleEnergy(Ekin);  
-  _particleGun->SetParticlePosition(G4ThreeVector(xInit, yInit, zInit));
-  _particleGun->GeneratePrimaryVertex(anEvent);
-  */
 
   /*
   //const G4int nMomArr   = 4;

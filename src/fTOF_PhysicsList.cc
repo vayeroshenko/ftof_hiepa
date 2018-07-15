@@ -20,7 +20,7 @@ fTOF_PhysicsList::fTOF_PhysicsList() : G4VUserPhysicsList()
   theRayleighScatteringProcess = 0;
   theBoundaryProcess = 0;
   defaultCutValue = 1.0*mm;
-  SetVerboseLevel(1);
+  SetVerboseLevel(0);
 }
 
 fTOF_PhysicsList::~fTOF_PhysicsList()
@@ -206,7 +206,7 @@ void fTOF_PhysicsList::ConstructOp()
 
   //theCerenkovProcess->DumpPhysicsTable();
 
-  SetVerbose(1);
+  SetVerbose(0);
 
   theCerenkovProcess->SetMaxNumPhotonsPerStep(300);
   theCerenkovProcess->SetTrackSecondariesFirst(true);
