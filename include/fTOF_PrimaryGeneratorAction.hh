@@ -17,6 +17,10 @@ public:
   
 public:
   void GeneratePrimaries(G4Event* anEvent);
+  void Scan(G4Event* anEvent, G4int nEv,
+		  	G4String particleName, G4double particleMomentum,
+  			G4double thetaMin, G4double thetaMax,
+  			G4double phiMin, G4double phiMax);
   
 public:
   void SetParticleName(G4String particleName) {_particleName = particleName;}

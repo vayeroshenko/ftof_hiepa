@@ -142,6 +142,8 @@ namespace fTOFConst{
 
   const G4double layerThickness = 0.1*mm;
 
+  const G4String particleName = "kaon+";
+
 
 
   //const G4int  N_PMT = 9;

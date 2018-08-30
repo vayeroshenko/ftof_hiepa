@@ -8,6 +8,7 @@
 #include "G4ProcessManager.hh"
 #include "G4SystemOfUnits.hh"
 #include "G4PhysicalConstants.hh"
+#include "fTOFConst.hh"
 
 
 fTOF_SteppingAction::fTOF_SteppingAction(fTOF_PrimaryGeneratorAction* 
@@ -134,9 +135,9 @@ void fTOF_SteppingAction::UserSteppingAction(const G4Step* aStep)
 
 
   if (aPrePV->GetName().contains("World") &&
-      aPostPV->GetName().contains("quartzBar") && aTrack->GetDynamicParticle()->GetDefinition()->GetParticleName() == "mu-") {  
+      aPostPV->GetName().contains("quartzBar") && aTrack->GetDynamicParticle()->GetDefinition()->GetParticleName() == fTOFConst::particleName) {
   
-    std::cout << "              ENTERING TIME               " << _trkT << std::endl;  
+//    std::cout << "              ENTERING TIME               " << _trkT << std::endl;
     G4String sdName = "fTOF";
       G4SDManager* SDman = G4SDManager::GetSDMpointer();
        fTOF_SensitiveDetector* sd = 
@@ -155,7 +156,7 @@ void fTOF_SteppingAction::UserSteppingAction(const G4Step* aStep)
 
   }  
     if (aPostPV->GetName().contains("World") &&
-      aPrePV->GetName().contains("quartzBar") && aTrack->GetDynamicParticle()->GetDefinition()->GetParticleName() == "mu-") {  /////////////////////////////////////////////////////////////////////////////////
+      aPrePV->GetName().contains("quartzBar") && aTrack->GetDynamicParticle()->GetDefinition()->GetParticleName() == fTOFConst::particleName) {  /////////////////////////////////////////////////////////////////////////////////
   
     // std::cout << "              ESCAPING TIME               " << _trkT << std::endl;
     
