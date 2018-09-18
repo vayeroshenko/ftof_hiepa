@@ -121,7 +121,7 @@ namespace fTOFConst{
 
 
   const G4int nSec = 101;
-  const G4int nDrawSec = 1;
+  const G4int nDrawSec = 101;
 
   const G4int nLayers = 1;
 
@@ -143,6 +143,7 @@ namespace fTOFConst{
   const G4double layerThickness = 0.1*mm;
 
   const G4String particleName = "kaon+";
+//  const G4String particleName = "pi+";
 
 
 

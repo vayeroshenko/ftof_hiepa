@@ -184,7 +184,10 @@ void fTOF_DetectorConstruction::DefineMaterials()
 G4VPhysicalVolume* fTOF_DetectorConstruction::Construct()
 {
 
-
+	  MagneticField* magField = new MagneticField();
+	  G4FieldManager* fieldMgr = G4TransportationManager::GetTransportationManager() ->GetFieldManager();
+	  fieldMgr->SetDetectorField(magField,0);
+	  fieldMgr->CreateChordFinder(magField);
 
   // 
   // Define World Volume

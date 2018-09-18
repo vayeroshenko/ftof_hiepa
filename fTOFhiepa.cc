@@ -22,6 +22,8 @@
 #include "fTOF_TrackingAction.hh"
 //#include "fTOF_UImessenger.hh"
 #include "fTOF_SteppingVerbose.hh"
+#include "MagneticField.hh"
+#include "G4TransportationManager.hh"
 
 #include "Randomize.hh"
 
@@ -98,6 +100,8 @@ int main(int argc, char** argv)
   eventAction->SetPrimGenerator(genAction);
   // Setup to be able to define some custom commands;
   //fTOF_UImessenger* messenger = new fTOF_UImessenger(runAction, genAction);
+
+
 
   // Initialize G4 kernel
   runManager->Initialize();

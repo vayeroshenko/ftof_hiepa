@@ -11,7 +11,7 @@ MagneticField::MagneticField()
 {
     //messenger = new A01MagneticFieldMessenger(this);
     G4cout << "MagneticField::MagneticField()" << G4endl;
-    Bfield = 1.5*tesla;
+    Bfield = 1*tesla;
 }
 
 MagneticField::~MagneticField()
@@ -27,8 +27,8 @@ void MagneticField::GetFieldValue(const double Point[4],double *Bfield) const
 bool MagneticField::SetField( const double *Point,  G4double & Bx, G4double & By, G4double & Bz) const {
     Bx = 0.0;
     By = 0.0;
-    //Bz = Bfield;    
-    Bz = 1.5*tesla;
+    Bz = Bfield;
+//    Bz = 2*tesla;
 
     //G4cout<<"Bx = "<<Bx<<G4endl
     //<<"By = "<<By<<G4endl
