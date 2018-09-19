@@ -21,7 +21,7 @@
 fTOF_PrimaryGeneratorAction::fTOF_PrimaryGeneratorAction() :
   _particleGun(0),
   _particleName("pi+"),
-  _particleMomentum(0.5*GeV),
+  _particleMomentum(180.*GeV),
   _PhiAngle(0.0*deg),
   _ThetaAngle(0.0*deg),
   _singlePhoton(false)
@@ -86,9 +86,9 @@ void fTOF_PrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
   */
 
   ////////////////////////
-  //_particleName = "kaon-";
+  _particleName = "pi+";
   //_particleMomentum = 1500.0*MeV;
-  _particleMomentum = 200.*GeV;           ////////////////////////////////// particle momentum
+  _particleMomentum = 180.*GeV;           ////////////////////////////////// particle momentum
   //_particleMomentum = 400.0*MeV;
   _muonGen->GenerateMuon((crtConst::hodo_hight+0.5));
   //_muonGen->GenerateMuon((83.0 + 38.1 + 30.0));
