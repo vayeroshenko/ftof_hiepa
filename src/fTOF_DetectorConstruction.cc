@@ -562,8 +562,8 @@ G4VPhysicalVolume* fTOF_DetectorConstruction::Construct()
   	  	Ta = G4ThreeVector();
   	  	Ra = G4RotationMatrix();
 
-    	i = 2;
-    	j = 1;
+    	i = 0;
+    	j = 2;
 
     	Ta.setX(0.);
     	Ta.setY((fTOFConst::hamChanGap/2.+hamChan.sizeY/2.)*(2*j-3));
