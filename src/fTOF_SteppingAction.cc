@@ -67,7 +67,7 @@ void fTOF_SteppingAction::UserSteppingAction(const G4Step* aStep)
 
 
     // if (aPrePV->GetName().contains("mixer") &&  
-    if ((aPrePV->GetName().contains("quartzBar") || aPrePV->GetName().contains("quartzBar1")) &&    
+    if ( (aPrePV->GetName().contains("quartzBar") || aPrePV->GetName().contains("quartzBar1")) &&
         aPostPV->GetName().contains("rightLogical") ) {
       G4String sdName = "fTOF";
       G4SDManager* SDman = G4SDManager::GetSDMpointer();

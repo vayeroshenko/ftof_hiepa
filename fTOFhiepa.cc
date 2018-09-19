@@ -107,9 +107,9 @@ int main(int argc, char** argv)
   // Get the pointer to the UI manager and set verbosities
   G4UImanager* UI = G4UImanager::GetUIpointer();
   if (argc == 1) {  // Define UI terminal for interactive mode
-    UI->ApplyCommand("/run/verbose 1");
-    UI->ApplyCommand("/event/verbose 1");
-    UI->ApplyCommand("/tracking/verbose 1");
+    UI->ApplyCommand("/run/verbose 0");
+    UI->ApplyCommand("/event/verbose 0");
+    UI->ApplyCommand("/tracking/verbose 0");
 #if defined(G4UI_USE_TCSH)
     G4UIsession* session = new G4UIterminal(new G4UItcsh);
 #else

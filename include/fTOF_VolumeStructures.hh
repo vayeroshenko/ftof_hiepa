@@ -44,17 +44,17 @@ struct WorldStruct : VolumeStruct {
 
 ///////////////////// fTOF bar 10.04.18 ///////////////
 
-struct FullBarStruct : VolumeStruct {
-  // Defined as a G4Box
-  const G4double sizeX;
-  const G4double sizeY;
-  const G4double sizeZ;
-  FullBarStruct() :
-    sizeX(fTOFConst::fullBarSizeX),
-    sizeY(fTOFConst::fullBarSizeY),
-    sizeZ(fTOFConst::fullBarSizeZ)
-  {;}
-};
+//struct FullBarStruct : VolumeStruct {
+//  // Defined as a G4Box
+//  const G4double sizeX;
+//  const G4double sizeY;
+//  const G4double sizeZ;
+//  FullBarStruct() :
+//    sizeX(fTOFConst::fullBarSizeX),
+//    sizeY(fTOFConst::fullBarSizeY),
+//    sizeZ(fTOFConst::fullBarSizeZ)
+//  {;}
+//};
 
 
 
@@ -131,24 +131,6 @@ struct PlanPmtBoxStruct : VolumeStruct { //////////////////// 11.04.18
 };
 
 
-// struct TrapezeSectorStruct: VolumeStruct {
-//   const G4double shortSide;
-//   const G4double longSide;
-//   const G4double thickness;
-//   const G4double height;
-//   const G4double angle;
-//   const G4double sides;
-//   const G4double middleLine;
-//   TrapezeSectorStruct():
-//     shortSide(fTOFConst::sectorShortSide),
-//     longSide(fTOFConst::sectorLongSide),
-//     thickness(fTOFConst::sectorThickness),
-//     height(fTOFConst::sectorHeight),
-//     angle(atan((longSide-shortSide)/2./height)),
-//     sides(sqrt(height*height + (longSide-shortSide)*(longSide-shortSide)/4.)),
-//     middleLine((longSide+shortSide)/2.)
-//   {;}
-// };
 
 
 
@@ -217,3 +199,85 @@ struct TrapezeMixerStruct: VolumeStruct {
 };
 
 //////////////////////////////////////////////////////////////////
+
+
+///////////////////// fTOF bar 10.04.18 ///////////////
+
+struct FullBarStruct : VolumeStruct {
+  // Defined as a G4Box
+  const G4double sizeX;
+  const G4double sizeY;
+  const G4double sizeZ;
+  FullBarStruct() :
+    sizeX(fTOFConst::fullBarSizeX),
+    sizeY(fTOFConst::fullBarSizeY),
+    sizeZ(fTOFConst::fullBarSizeZ)
+  {;}
+};
+
+
+
+
+
+
+
+struct BarBoxStruct : VolumeStruct {
+  // Defined as a G4Box
+  const G4double sizeX;
+  const G4double sizeY;
+  const G4double sizeZ;
+  BarBoxStruct() :
+    sizeX(fTOFConst::barBoxSizeX),
+    sizeY(fTOFConst::barBoxSizeY),
+    sizeZ(fTOFConst::barBoxSizeZ)
+  {;}
+};
+
+struct BarTrdXYStruct : VolumeStruct {
+  // Defined as a G4Trd
+  const G4double dX1;
+  const G4double dX2;
+  const G4double dY1;
+  const G4double dY2;
+  const G4double dZ;
+  BarTrdXYStruct() :
+    dX1(fTOFConst::barBoxSizeX/2.),
+    dX2(fTOFConst::barBoxSizeX/2. - fTOFConst::barChamfer/2.),
+    dY1(fTOFConst::barBoxSizeY/2.),
+    dY2(fTOFConst::barBoxSizeY/2. - fTOFConst::barChamfer/2.),
+    dZ(fTOFConst::barChamfer/4.)
+  {;}
+};
+
+struct BarTrdYZStruct : VolumeStruct {
+  // Defined as a G4Trd
+  const G4double dX1;
+  const G4double dX2;
+  const G4double dY1;
+  const G4double dY2;
+  const G4double dZ;
+  BarTrdYZStruct() :
+    dX1(fTOFConst::barBoxSizeZ/2.),
+    dX2(fTOFConst::barBoxSizeZ/2. - fTOFConst::barChamfer/2.),
+    dY1(fTOFConst::barBoxSizeY/2.),
+    dY2(fTOFConst::barBoxSizeY/2. - fTOFConst::barChamfer/2.),
+    dZ(fTOFConst::barChamfer/4.)
+  {;}
+};
+
+struct BarTrdZXStruct : VolumeStruct {
+  // Defined as a G4Trd
+  const G4double dX1;
+  const G4double dX2;
+  const G4double dY1;
+  const G4double dY2;
+  const G4double dZ;
+  BarTrdZXStruct() :
+    dX1(fTOFConst::barBoxSizeX/2.),
+    dX2(fTOFConst::barBoxSizeX/2. - fTOFConst::barChamfer/2.),
+    dY1(fTOFConst::barBoxSizeZ/2.),
+    dY2(fTOFConst::barBoxSizeZ/2. - fTOFConst::barChamfer/2.),
+    dZ(fTOFConst::barChamfer/4.)
+  {;}
+};
+

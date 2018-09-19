@@ -44,12 +44,20 @@ private:
   WorldStruct world;
 
 
-  FullBarStruct bigBox;
+//  FullBarStruct bigBox;
 
   TrapezeSectorStruct sector;
   TrapezeMixerStruct mixer;
 
   TrapezeAbsStruct abs;
+
+  // fTOF bar 10.04.18
+  BarBoxStruct barBox;
+  BarTrdXYStruct trdXY;
+  BarTrdYZStruct trdYZ;
+  BarTrdZXStruct trdZX;
+
+  FullBarStruct bigBox;
 
 
  // mcp pmt's 11.04.18

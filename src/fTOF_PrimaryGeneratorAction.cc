@@ -88,7 +88,7 @@ void fTOF_PrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
   ////////////////////////
   //_particleName = "kaon-";
   //_particleMomentum = 1500.0*MeV;
-  _particleMomentum = 2.*GeV;           ////////////////////////////////// particle momentum
+  _particleMomentum = 200.*GeV;           ////////////////////////////////// particle momentum
   //_particleMomentum = 400.0*MeV;
   _muonGen->GenerateMuon((crtConst::hodo_hight+0.5));
   //_muonGen->GenerateMuon((83.0 + 38.1 + 30.0));
@@ -115,7 +115,7 @@ void fTOF_PrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
   //dY = std::cos(_ThetaAngle);
   dX =  0.;
   dZ =  -130.;
-  dY =  -70.0;
+  dY =  0.0;
   G4ThreeVector dir(dX, dY, dZ);
   _particleGun->SetParticleDefinition(particle);
   _particleGun->SetParticleMomentumDirection(dir);

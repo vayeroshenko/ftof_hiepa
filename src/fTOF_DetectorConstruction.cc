@@ -215,16 +215,19 @@ G4VPhysicalVolume* fTOF_DetectorConstruction::Construct()
       hamWin.sizeX/2.0, 
       hamWin.sizeY/2.0,
       hamWin.sizeZ/2.0);
-  hamWin.logical = new G4LogicalVolume(hamWin.solid, 
-          hamWin.material,"hamWindow");
+//  hamWin.logical = new G4LogicalVolume(hamWin.solid,
+//          hamWin.material,"hamWindow");
+//  hamWin.logical = new G4LogicalVolume(hamWin.solid,
+//          hamWin.material,"rightLogical");
 
   planWin.solid = new G4Box("planWindow",
       planWin.sizeX/2.0, 
       planWin.sizeY/2.0,
       planWin.sizeZ/2.0);
-  planWin.logical = new G4LogicalVolume(planWin.solid, 
-          planWin.material,"planWindow");
-
+//  planWin.logical = new G4LogicalVolume(planWin.solid,
+//          planWin.material,"planWindow");
+  planWin.logical = new G4LogicalVolume(planWin.solid,
+          planWin.material,"leftLogical");
   ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 
@@ -234,17 +237,17 @@ G4VPhysicalVolume* fTOF_DetectorConstruction::Construct()
 
 
   hamChan.solid = new G4Box("hamChannel",
-      hamChan.sizeX/2.0, 
+      hamChan.sizeX/2.0,
       hamChan.sizeY/2.0,
       hamChan.sizeZ/2.0);
-  hamChan.logical = new G4LogicalVolume(hamChan.solid, 
-          hamChan.material,"hamChannel");
+  hamChan.logical = new G4LogicalVolume(hamChan.solid,
+          hamChan.material,"rightLogical");
 
-  planChan.solid = new G4Box("hamChannel",
-      planChan.sizeX/2.0, 
+  planChan.solid = new G4Box("planChannel",
+      planChan.sizeX/2.0,
       planChan.sizeY/2.0,
       planChan.sizeZ/2.0);
-  planChan.logical = new G4LogicalVolume(planChan.solid, 
+  planChan.logical = new G4LogicalVolume(planChan.solid,
           planChan.material,"planChannel");
 
 
@@ -318,35 +321,163 @@ G4VPhysicalVolume* fTOF_DetectorConstruction::Construct()
     );
 
 
+  //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    // G4Trd *mixerTrdFront = new G4Trd(
-    // "mixerFront",
-    // mixer.shortSide/2.,
-    // mixer.longSide/2.,
-    // mixer.thickness/2.,
-    // mixer.thickness/2.,
-    // mixer.height/2.
-    // );
+  /////////////////////////////////////////////////////// fTOF substraction 12.04.18 //////////////////////////////////////////////////////
 
 
-    // G4Trd *mixerTrdFront = new G4Trd(
-    // "mixerBack",
-    // mixer.shortSide/2.,
-    // mixer.longSide/2.,
-    // mixer.thickness/2.,
-    // mixer.thickness/2.,
-    // mixer.height/2.
-    // );
+  Ra = G4RotationMatrix();
+  Ta = G4ThreeVector();
+  Tr = G4Transform3D();
+
+  bigBox.solid = new G4Box("bigBox",
+      bigBox.sizeX/2.0,
+      bigBox.sizeY/2.0,
+      bigBox.sizeZ/2.0);
+
+  G4Box *xBox = new G4Box("xSubstr",
+      fTOFConst::fullBarSizeX,
+      fTOFConst::barChamfer,
+      fTOFConst::barChamfer);
+
+  G4Box *yBox = new G4Box("ySubstr",
+      fTOFConst::barChamfer,
+      fTOFConst::fullBarSizeY,
+      fTOFConst::barChamfer);
+
+  G4Box *zBox = new G4Box("zSubstr",
+      fTOFConst::barChamfer,
+      fTOFConst::barChamfer,
+      fTOFConst::fullBarSizeZ);
+
+  Ra.rotateX(45.*deg);
+  Ta.setX(0.);
+  Ta.setY(fTOFConst::fullBarSizeY/2. - fTOFConst::barChamfer/2. + fTOFConst::barChamfer/sqrt(2.));
+  Ta.setZ(fTOFConst::fullBarSizeZ/2. - fTOFConst::barChamfer/2. + fTOFConst::barChamfer/sqrt(2.));
+  Tr =  G4Transform3D(Ra, Ta);
+  G4SubtractionSolid *final = new G4SubtractionSolid ("quartzBar",
+      bigBox.solid,
+      xBox,
+      Tr);
+
+  Ta.setX(0.);
+  Ta.setY(- fTOFConst::fullBarSizeY/2. + fTOFConst::barChamfer/2. - fTOFConst::barChamfer/sqrt(2.));
+  Ta.setZ(fTOFConst::fullBarSizeZ/2. - fTOFConst::barChamfer/2. + fTOFConst::barChamfer/sqrt(2.));
+  Tr =  G4Transform3D(Ra, Ta);
+  final = new G4SubtractionSolid ("quartzBar",
+      final,
+      xBox,
+      Tr);
+
+  Ta.setX(0.);
+  Ta.setY(- fTOFConst::fullBarSizeY/2. + fTOFConst::barChamfer/2. - fTOFConst::barChamfer/sqrt(2.));
+  Ta.setZ(-fTOFConst::fullBarSizeZ/2. + fTOFConst::barChamfer/2. - fTOFConst::barChamfer/sqrt(2.));
+  Tr =  G4Transform3D(Ra, Ta);
+  final = new G4SubtractionSolid ("quartzBar",
+      final,
+      xBox,
+      Tr);
+
+  Ta.setX(0.);
+  Ta.setY(fTOFConst::fullBarSizeY/2. - fTOFConst::barChamfer/2. + fTOFConst::barChamfer/sqrt(2.));
+  Ta.setZ(- fTOFConst::fullBarSizeZ/2. + fTOFConst::barChamfer/2. - fTOFConst::barChamfer/sqrt(2.));
+  Tr =  G4Transform3D(Ra, Ta);
+  final = new G4SubtractionSolid ("quartzBar",
+      final,
+      xBox,
+      Tr);
+
+  Ra = G4RotationMatrix(); /////////////////////////////////////////////////////////////////////////////
+
+  Ra.rotateY(45.*deg);
+  Ta.setY(0.);
+  Ta.setZ(fTOFConst::fullBarSizeZ/2. - fTOFConst::barChamfer/2. + fTOFConst::barChamfer/sqrt(2.));
+  Ta.setX(fTOFConst::fullBarSizeX/2. - fTOFConst::barChamfer/2. + fTOFConst::barChamfer/sqrt(2.));
+  Tr =  G4Transform3D(Ra, Ta);
+  final = new G4SubtractionSolid ("quartzBar",
+      final,
+      yBox,
+      Tr);
+
+  Ta.setY(0.);
+  Ta.setZ(- fTOFConst::fullBarSizeZ/2. + fTOFConst::barChamfer/2. - fTOFConst::barChamfer/sqrt(2.));
+  Ta.setX(fTOFConst::fullBarSizeX/2. - fTOFConst::barChamfer/2. + fTOFConst::barChamfer/sqrt(2.));
+  Tr =  G4Transform3D(Ra, Ta);
+  final = new G4SubtractionSolid ("quartzBar",
+      final,
+      yBox,
+      Tr);
+
+  Ta.setY(0.);
+  Ta.setZ(- fTOFConst::fullBarSizeZ/2. + fTOFConst::barChamfer/2. - fTOFConst::barChamfer/sqrt(2.));
+  Ta.setX(-fTOFConst::fullBarSizeX/2. + fTOFConst::barChamfer/2. - fTOFConst::barChamfer/sqrt(2.));
+  Tr =  G4Transform3D(Ra, Ta);
+  final = new G4SubtractionSolid ("quartzBar",
+      final,
+      yBox,
+      Tr);
+
+  Ta.setY(0.);
+  Ta.setZ(fTOFConst::fullBarSizeZ/2. - fTOFConst::barChamfer/2. + fTOFConst::barChamfer/sqrt(2.));
+  Ta.setX(- fTOFConst::fullBarSizeX/2. + fTOFConst::barChamfer/2. - fTOFConst::barChamfer/sqrt(2.));
+  Tr =  G4Transform3D(Ra, Ta);
+  final = new G4SubtractionSolid ("quartzBar",
+      final,
+      yBox,
+      Tr);
+
+    Ra = G4RotationMatrix(); /////////////////////////////////////////////////////////////////////////////
+
+  Ra.rotateZ(45.*deg);
+  Ta.setZ(0.);
+  Ta.setX(fTOFConst::fullBarSizeX/2. - fTOFConst::barChamfer/2. + fTOFConst::barChamfer/sqrt(2.));
+  Ta.setY(fTOFConst::fullBarSizeY/2. - fTOFConst::barChamfer/2. + fTOFConst::barChamfer/sqrt(2.));
+  Tr =  G4Transform3D(Ra, Ta);
+  final = new G4SubtractionSolid ("quartzBar",
+      final,
+      zBox,
+      Tr);
+
+  Ta.setZ(0.);
+  Ta.setX(- fTOFConst::fullBarSizeX/2. + fTOFConst::barChamfer/2. - fTOFConst::barChamfer/sqrt(2.));
+  Ta.setY(fTOFConst::fullBarSizeY/2. - fTOFConst::barChamfer/2. + fTOFConst::barChamfer/sqrt(2.));
+  Tr =  G4Transform3D(Ra, Ta);
+  final = new G4SubtractionSolid ("quartzBar",
+      final,
+      zBox,
+      Tr);
+
+  Ta.setZ(0.);
+  Ta.setX(- fTOFConst::fullBarSizeX/2. + fTOFConst::barChamfer/2. - fTOFConst::barChamfer/sqrt(2.));
+  Ta.setY(-fTOFConst::fullBarSizeY/2. + fTOFConst::barChamfer/2. - fTOFConst::barChamfer/sqrt(2.));
+  Tr =  G4Transform3D(Ra, Ta);
+  final = new G4SubtractionSolid ("quartzBar",
+      final,
+      zBox,
+      Tr);
+
+  Ta.setZ(0.);
+  Ta.setX(fTOFConst::fullBarSizeX/2. - fTOFConst::barChamfer/2. + fTOFConst::barChamfer/sqrt(2.));
+  Ta.setY(- fTOFConst::fullBarSizeY/2. + fTOFConst::barChamfer/2. - fTOFConst::barChamfer/sqrt(2.));
+  Tr =  G4Transform3D(Ra, Ta);
+  final = new G4SubtractionSolid ("quartzBar",
+      final,
+      zBox,
+      Tr);
 
 
 
-  G4LogicalVolume *fullBarLog = new G4LogicalVolume(trapeze,bigBox.material,"quartzBar");
+
+//  G4LogicalVolume *fullBarLog = new G4LogicalVolume(final,barBox.material,"quartzBar");
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+  G4LogicalVolume *fullBarLog = new G4LogicalVolume(final,bigBox.material,"quartzBar");
 
   G4LogicalVolume *absLayer = new G4LogicalVolume(trapeze1,world.material,"absLayer");
 
   G4LogicalVolume *absorber = new G4LogicalVolume(absTrd,bigBox.material,"absorber");
-
-  G4LogicalVolume *fullBarLog1 = new G4LogicalVolume(trapeze1,bigBox.material,"quartzBar1");
 
   G4LogicalVolume *mixerLog = new G4LogicalVolume(mixerTrd,bigBox.material,"mixer");
 
@@ -360,7 +491,7 @@ G4VPhysicalVolume* fTOF_DetectorConstruction::Construct()
     5.*mm
     );
 
-  G4LogicalVolume *leftLogical = new G4LogicalVolume(leftVol, 
+  G4LogicalVolume *leftLogical = new G4LogicalVolume(leftVol,
         bigBox.material,"leftLogical");
 
 
@@ -370,8 +501,14 @@ G4VPhysicalVolume* fTOF_DetectorConstruction::Construct()
     5*mm
     );
 
-  G4LogicalVolume *rightLogical = new G4LogicalVolume(rightVol, 
-        bigBox.material,"rightLogical");
+//  G4LogicalVolume *rightLogical = new G4LogicalVolume(rightVol,
+//        bigBox.material,"rightLogical");
+
+  //  hamWin.logical = new G4LogicalVolume(hamWin.solid,
+  //          hamWin.material,"hamWindow");
+
+  //  planWin.logical = new G4LogicalVolume(planWin.solid,
+  //          planWin.material,"planWindow");
 
 
 
@@ -382,140 +519,13 @@ G4VPhysicalVolume* fTOF_DetectorConstruction::Construct()
 
   //--------------------------------------------------------
 
-  std::cout << "Short side = " << fTOFConst::innerSide/cm << " cm" << std::endl
-            << "Long side = "  << fTOFConst::outerSide/cm << " cm" << std::endl;
-
-
-
-  for (int l = 0; l < fTOFConst::nLayers; ++l ){
-    for (int j = 0; j < fTOFConst::nSec; ++j) {
-      G4double i = j + l * 1./fTOFConst::nLayers;
-      G4double dist = (sector.thickness + fTOFConst::layerDist + fTOFConst::layerThickness) * l;
-      /////////// sector /////////////
-      Ta = G4ThreeVector(0.,0.,0.);
-      Ra = G4RotationMatrix(); 
-
-      Ra.rotateY(- 360./fTOFConst::nSec*i *deg + 90.*deg);
-      Ta.setX(fTOFConst::centerRad * TMath::Cos(360./fTOFConst::nSec*i *deg));
-      Ta.setY(dist);
-      Ta.setZ(fTOFConst::centerRad * TMath::Sin(360./fTOFConst::nSec*i *deg));
-      Tr = G4Transform3D(Ra,Ta);
-      secAssembly->AddPlacedVolume(fullBarLog,Tr);
-
-      ////////// absorber /////////////
-      Ta = G4ThreeVector(0.,0.,0.);
-      Ra = G4RotationMatrix(); 
-
-      Ra.rotateY(- 360./fTOFConst::nSec*(i+0.5) *deg + 90.*deg);
-      Ta.setX((fTOFConst::innerRad + fTOFConst::outerRad)/2. 
-              * TMath::Cos(360./fTOFConst::nSec*(i+0.5) *deg));
-      Ta.setY(dist);
-      Ta.setZ((fTOFConst::innerRad + fTOFConst::outerRad)/2. 
-              * TMath::Sin(360./fTOFConst::nSec*(i+0.5) *deg));
-      Tr = G4Transform3D(Ra,Ta);
-      secAssembly->AddPlacedVolume(absorber,Tr);
-
-      ///////// inner abs /////////////
-      Ta = G4ThreeVector(0.,0.,0.);
-      Ra = G4RotationMatrix(); 
-
-      Ra.rotateY(- 360./fTOFConst::nSec*i *deg + 90.*deg);
-      Ta.setX((fTOFConst::innerRad*TMath::Cos(TMath::Pi() / fTOFConst::nSec) - 5*mm) * TMath::Cos(360./fTOFConst::nSec*i *deg));
-      Ta.setY(dist);
-      Ta.setZ((fTOFConst::innerRad*TMath::Cos(TMath::Pi() / fTOFConst::nSec) - 5*mm) * TMath::Sin(360./fTOFConst::nSec*i *deg));
-      Tr = G4Transform3D(Ra,Ta);
-      secAssembly->AddPlacedVolume(leftLogical,Tr);
-
-      /////////// outer detector ///////
-      Ta = G4ThreeVector(0.,0.,0.);
-      Ra = G4RotationMatrix(); 
-
-      Ra.rotateY(- 360./fTOFConst::nSec*i *deg + 90.*deg);
-      Ta.setX((fTOFConst::outerRad*TMath::Cos(TMath::Pi() / fTOFConst::nSec) + 5*mm) * TMath::Cos(360./fTOFConst::nSec*i *deg));
-      Ta.setY(dist);
-      Ta.setZ((fTOFConst::outerRad*TMath::Cos(TMath::Pi() / fTOFConst::nSec) + 5*mm) * TMath::Sin(360./fTOFConst::nSec*i *deg));
-      Tr = G4Transform3D(Ra,Ta);
-      secAssembly->AddPlacedVolume(rightLogical,Tr);
-
-      ///////// layer absorber ////////
-
-      if (l != fTOFConst::nLayers - 1){
-        Ta = G4ThreeVector(0.,0.,0.);
-        Ra = G4RotationMatrix(); 
-
-        Ra.rotateY(- 360./fTOFConst::nSec*i *deg + 90.*deg);
-        Ta.setX(fTOFConst::centerRad * TMath::Cos(360./fTOFConst::nSec*i *deg));
-        Ta.setY((sector.thickness + fTOFConst::layerDist) * (l+0.5));
-        Ta.setZ(fTOFConst::centerRad * TMath::Sin(360./fTOFConst::nSec*i *deg));
-        Tr = G4Transform3D(Ra,Ta);
-        secAssembly->AddPlacedVolume(absLayer,Tr);
-      }
-    }
-  }
-
-
-
-  // for (int j = 0; j < fTOFConst::nSec; ++j) { G4double i = j + 0.5; 
-  //   /////////// sector /////////////
-
-
-  //   Ta = G4ThreeVector(0., sector.thickness + fTOFConst::layerDist + fTOFConst::layerThickness ,0.);
-  //   Ra = G4RotationMatrix(); 
-
-  //   Ra.rotateY(- 360./fTOFConst::nSec*i *deg + 90.*deg);
-  //   Ta.setX(fTOFConst::centerRad * TMath::Cos(360./fTOFConst::nSec*i *deg));
-  //   Ta.setZ(fTOFConst::centerRad * TMath::Sin(360./fTOFConst::nSec*i *deg));
-  //   Tr = G4Transform3D(Ra,Ta);
-  //   secAssembly->AddPlacedVolume(fullBarLog,Tr);
-
-  //   ////////// absorber /////////////
-  //   Ta = G4ThreeVector(0.,sector.thickness + fTOFConst::layerDist+ fTOFConst::layerThickness,0.);
-  //   Ra = G4RotationMatrix(); 
-
-  //   Ra.rotateY(- 360./fTOFConst::nSec*(i+0.5) *deg + 90.*deg);
-  //   Ta.setX((fTOFConst::innerRad + fTOFConst::outerRad)/2. 
-  //           * TMath::Cos(360./fTOFConst::nSec*(i+0.5) *deg));
-  //   Ta.setZ((fTOFConst::innerRad + fTOFConst::outerRad)/2. 
-  //           * TMath::Sin(360./fTOFConst::nSec*(i+0.5) *deg));
-  //   Tr = G4Transform3D(Ra,Ta);
-  //   secAssembly->AddPlacedVolume(absorber,Tr);
-
-  //   ///////// inner abs /////////////
-  //   Ta = G4ThreeVector(0.,sector.thickness + fTOFConst::layerDist+ fTOFConst::layerThickness,0.);
-  //   Ra = G4RotationMatrix(); 
-
-  //   Ra.rotateY(- 360./fTOFConst::nSec*i *deg + 90.*deg);
-  //   Ta.setX((fTOFConst::innerRad*TMath::Cos(TMath::Pi() / fTOFConst::nSec) - 5*mm) * TMath::Cos(360./fTOFConst::nSec*i *deg));
-  //   Ta.setZ((fTOFConst::innerRad*TMath::Cos(TMath::Pi() / fTOFConst::nSec) - 5*mm) * TMath::Sin(360./fTOFConst::nSec*i *deg));
-  //   Tr = G4Transform3D(Ra,Ta);
-  //   secAssembly->AddPlacedVolume(leftLogical,Tr);
-
-  //   /////////// outer detector ///////
-  //   Ta = G4ThreeVector(0.,sector.thickness + fTOFConst::layerDist+ fTOFConst::layerThickness,0.);
-  //   Ra = G4RotationMatrix(); 
-
-  //   Ra.rotateY(- 360./fTOFConst::nSec*i *deg + 90.*deg);
-  //   Ta.setX((fTOFConst::outerRad*TMath::Cos(TMath::Pi() / fTOFConst::nSec) - 5*mm) * TMath::Cos(360./fTOFConst::nSec*i *deg));
-  //   Ta.setZ((fTOFConst::outerRad*TMath::Cos(TMath::Pi() / fTOFConst::nSec) - 5*mm) * TMath::Sin(360./fTOFConst::nSec*i *deg));
-  //   Tr = G4Transform3D(Ra,Ta);
-  //   secAssembly->AddPlacedVolume(rightLogical,Tr);
-  // }
-
-
-
-
   Ta = G4ThreeVector(0.,0.,0.);
-  // Ta.setY(sector.thickness/2. + 0.5*mm);
-  Ra = G4RotationMatrix(); 
+  Ra = G4RotationMatrix();
   Tr = G4Transform3D(Ra,Ta);
-  // secAssembly->AddPlacedVolume(fullBarLog,Tr);
+  secAssembly->AddPlacedVolume(fullBarLog,Tr);
 
-  Ta = G4ThreeVector(0.,0.,0.);
-  Ta.setY(-sector.thickness/2.-0.5*mm);
-  Ta.setZ(0.);
-  Ra = G4RotationMatrix(); 
-  Tr = G4Transform3D(Ra,Ta);
-  // secAssembly->AddPlacedVolume(fullBarLog1,Tr);
+
+
 
   ///////////////////////////////////////////////////////////////////////////////////////
 
@@ -526,7 +536,7 @@ G4VPhysicalVolume* fTOF_DetectorConstruction::Construct()
     0.);
   Ra = G4RotationMatrix(); 
   Tr = G4Transform3D(Ra,Ta);
-  // secAssembly->AddPlacedVolume(hamWin.logical,Tr);
+//   secAssembly->AddPlacedVolume(hamWin.logical,Tr);
 
 
   Ta = G4ThreeVector(-bigBox.sizeX/2.-planWin.sizeX/2.,
@@ -534,31 +544,61 @@ G4VPhysicalVolume* fTOF_DetectorConstruction::Construct()
     0.);
   Ra = G4RotationMatrix(); 
   Tr = G4Transform3D(Ra,Ta);
-  // secAssembly->AddPlacedVolume(planWin.logical,Tr);
+   secAssembly->AddPlacedVolume(planWin.logical,Tr);
+
+
+/////////////////////////////////
+
+   G4LogicalVolume *rightLogical = new G4LogicalVolume(hamChan.solid,
+           bigBox.material,"rightLogical");
+
+
+//  for( i=0; i<4; i++){                       ///////////////////// hamamatsu 11.04.18 //////////////////////////////////////////////////////////////////////
+    //add sensitive
+//    for ( j=0; j<4; j++){
+   	   	G4int i = 0;
+   	   	G4int j = 0;
+
+  	  	Ta = G4ThreeVector();
+  	  	Ra = G4RotationMatrix();
+
+    	i = 2;
+    	j = 1;
+
+    	Ta.setX(0.);
+    	Ta.setY((fTOFConst::hamChanGap/2.+hamChan.sizeY/2.)*(2*j-3));
+    	Ta.setZ( 1.5*hamChan.sizeZ + 1.5*fTOFConst::hamChanGap - (fTOFConst::hamChanGap+hamChan.sizeZ)*i);
+    	Tr = G4Transform3D(Ra, Ta);
+
+    	G4SubtractionSolid *hamAntiWin = new G4SubtractionSolid ("hamAntiWin",
+    	      hamWin.solid,
+    	      hamChan.solid,
+    	      Tr);
+
+
+    	Ta = G4ThreeVector();
+  	  	Ra = G4RotationMatrix();
+    	Ta.setX(bigBox.sizeX/2.0  + hamWin.sizeX/2.);
+    	Ta.setY((fTOFConst::hamChanGap/2.+hamChan.sizeY/2.)*(2*j-3));
+    	Ta.setZ( 1.5*hamChan.sizeZ + 1.5*fTOFConst::hamChanGap - (fTOFConst::hamChanGap+hamChan.sizeZ)*i);
+    	Tr = G4Transform3D(Ra, Ta);
+        secAssembly->AddPlacedVolume(rightLogical, Tr);
+
+    	hamWin.logical = new G4LogicalVolume(hamAntiWin,
+    	      hamWin.material,"hamAntiWin");
 
 
 
-  // MCP boxes
 
-  Ta = G4ThreeVector(bigBox.sizeX/2. + hamWin.sizeX + hamBox.sizeX/2. + hamChan.sizeX,
-    0.,
-    0.);
-  Ra = G4RotationMatrix(); 
-  Tr = G4Transform3D(Ra,Ta);
-  // secAssembly->AddPlacedVolume(hamBox.logical,Tr);
+      Ta = G4ThreeVector(bigBox.sizeX/2.+hamWin.sizeX/2.,
+        0.,
+        0.);
+      Ra = G4RotationMatrix();
+      Tr = G4Transform3D(Ra,Ta);
 
-  Ta = G4ThreeVector(-bigBox.sizeX/2. - planWin.sizeX - planBox.sizeX/2. - planChan.sizeX,
-    0.,
-    0.);
-  Ra = G4RotationMatrix(); 
-  Tr = G4Transform3D(Ra,Ta);
-  // secAssembly->AddPlacedVolume(planBox.logical,Tr);
-
-  //
-
-  G4int i = 0;
-  G4int j = 0;
-  Ra = G4RotationMatrix(); 
+       secAssembly->AddPlacedVolume(hamWin.logical,Tr);
+//    }
+//  }
 
 
 
@@ -604,38 +644,6 @@ G4VPhysicalVolume* fTOF_DetectorConstruction::Construct()
 
   // secAssembly->AddPlacedVolume(rightLogical, Tr);
   
-
-
-
-
-
-
-
-  // G4Box *rightVol = new G4Box("rightVol",
-  //   mixer.longSide/2.,
-  //   mixer.thickness/2.,
-  //   5*mm
-  //   );
-
-  // Ra = G4RotationMatrix(); 
-  // Ta.setZ(sector.height/2. + mixer.height + 4.999*mm);
-  // Ta.setY(0.);
-  // Ta.setX(0.);
-  // Tr = G4Transform3D(Ra, Ta);
-  // G4LogicalVolume *rightLogical = new G4LogicalVolume(rightVol, 
-  //       bigBox.material,"rightLogical");
-  // secAssembly->AddPlacedVolume(rightLogical, Tr);
-
-
-
-  Ra = G4RotationMatrix(); 
-  Ta.setZ(sector.height/2. + mixer.height/2.);
-  Ta.setY(0.);
-  Ta.setX(0.);
-  Tr = G4Transform3D(Ra, Ta);
-  // secAssembly->AddPlacedVolume(mixerLog, Tr);
-
-
 
 
 
@@ -694,6 +702,7 @@ Ra = G4RotationMatrix();
 
   Ra = G4RotationMatrix();
   Ra.rotateX(90.0*deg);
+  Ra.rotateY(45.*deg);
   Ta.setX(0.);
   Ta.setY(0.);
   Ta.setZ(0.);
@@ -732,7 +741,6 @@ Ra = G4RotationMatrix();
   world.logical->SetVisAttributes(worldVisAtt);
 
   fullBarLog->SetVisAttributes(quartzVisAtt);
-  fullBarLog1->SetVisAttributes(quartzVisAtt);
   hamWin.logical->SetVisAttributes(quartzVisAtt);
   planWin.logical->SetVisAttributes(quartzVisAtt);
 
@@ -798,14 +806,19 @@ Ra = G4RotationMatrix();
 
 
   new G4LogicalSkinSurface("SensitiveSurfaceLeft", 
-			   planChan.logical, OpVolumeKillSurface);
+		planChan.logical, OpVolumeKillSurface);
   new G4LogicalSkinSurface("SensitiveSurfaceRight", 
         hamChan.logical, OpVolumeKillSurface);
 
-  new G4LogicalSkinSurface("SensitiveSurfaceLeft", 
-         leftLogical, OpVolumeKillSurface);
-  new G4LogicalSkinSurface("SensitiveSurfaceRight", 
+//  new G4LogicalSkinSurface("SensitiveSurfaceLeft",
+//         leftLogical, OpVolumeKillSurface);
+  new G4LogicalSkinSurface("SensitiveSurfaceRight",
         rightLogical, OpVolumeKillSurface);
+  new G4LogicalSkinSurface("SensitiveSurfaceLeft", 
+		  planWin.logical, OpVolumeKillSurface);
+  new G4LogicalSkinSurface("SensitiveSurfaceRight", 
+		  hamWin.logical, OpVolumeKillSurface);
+
 
 
   new G4LogicalSkinSurface("AbsTrdSurface", 
@@ -836,8 +849,8 @@ Ra = G4RotationMatrix();
 
   leftLogical->SetSensitiveDetector(aSD);
   rightLogical->SetSensitiveDetector(aSD);
-  // frontLogical->SetSensitiveDetector(aSD);
-  // backLogical->SetSensitiveDetector(aSD);
+   frontLogical->SetSensitiveDetector(aSD);
+   backLogical->SetSensitiveDetector(aSD);
 
 
 

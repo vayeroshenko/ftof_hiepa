@@ -91,7 +91,7 @@ namespace fTOFConst{
 
 
   const G4double hamSensitiveSize = 22.5*mm;
-  const G4double hamWindowThick = 1.5*mm; 
+  const G4double hamWindowThick = 1.*mm;
 
   const G4double hamBoxSize = 27.5*mm;
   const G4double hamBoxDepth = 13.*mm;
