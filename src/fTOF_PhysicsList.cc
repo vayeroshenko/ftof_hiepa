@@ -20,7 +20,7 @@ fTOF_PhysicsList::fTOF_PhysicsList() : G4VUserPhysicsList()
   theRayleighScatteringProcess = 0;
   theBoundaryProcess = 0;
   defaultCutValue = 1.0*mm;
-  SetVerboseLevel(1);
+  SetVerboseLevel(0);
 }
 
 fTOF_PhysicsList::~fTOF_PhysicsList()
@@ -254,8 +254,10 @@ void fTOF_PhysicsList::SetCuts()
 
 void fTOF_PhysicsList::SetVerbose(G4int verbose)
 {
-   theCerenkovProcess->SetVerboseLevel(verbose);
-  //  theAbsorptionProcess->SetVerboseLevel(verbose);
+//   theCerenkovProcess->SetVerboseLevel(verbose);
+	theCerenkovProcess->SetVerboseLevel(0);
+
+	//  theAbsorptionProcess->SetVerboseLevel(verbose);
   //  theRayleighScatteringProcess->SetVerboseLevel(verbose);
   //  theBoundaryProcess->SetVerboseLevel(verbose);
 }  
