@@ -44,7 +44,7 @@ private:
 
   G4double _entTime;
 
-  G4double _trkNSideRefl = 0;
+  G4double _trkNSideRefl;
   G4double _trkSideID;
 
 

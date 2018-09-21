@@ -847,10 +847,10 @@ Ra = G4RotationMatrix();
   hamChan.logical->SetSensitiveDetector(aSD);
   planChan.logical->SetSensitiveDetector(aSD);
 
-  leftLogical->SetSensitiveDetector(aSD);
-  rightLogical->SetSensitiveDetector(aSD);
-   frontLogical->SetSensitiveDetector(aSD);
-   backLogical->SetSensitiveDetector(aSD);
+//  leftLogical->SetSensitiveDetector(aSD);
+//  rightLogical->SetSensitiveDetector(aSD);
+//   frontLogical->SetSensitiveDetector(aSD);
+//   backLogical->SetSensitiveDetector(aSD);
 
 
 

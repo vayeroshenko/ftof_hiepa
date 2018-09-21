@@ -60,10 +60,15 @@ void fTOF_SteppingAction::UserSteppingAction(const G4Step* aStep)
       (fTOF_SensitiveDetector*)SDman->FindSensitiveDetector(sdName);
 
 
-      HitData hitInfo;
-      hitInfo.entTime = aStep->GetPostStepPoint()->GetGlobalTime()/ps;
+//      HitData hitInfo;
+      _entTime = aStep->GetPostStepPoint()->GetGlobalTime()/ps;
     }
 
+
+    if ( (aPrePV->GetName().contains("quartzBar") || aPrePV->GetName().contains("quartzBar1")) &&
+        aPostPV->GetName().contains("hamAntiWindow") ) {
+        _trkNSideRefl = 0;
+    }
 
 
     // if (aPrePV->GetName().contains("mixer") &&  
@@ -87,9 +92,18 @@ void fTOF_SteppingAction::UserSteppingAction(const G4Step* aStep)
       hitInfo.trkLength = _trkLength;
       hitInfo.chID = _chID;
 
-      hitInfo.trkSideID = 1;
+      hitInfo.entMomX = _entMomX;
+      hitInfo.entMomY = _entMomY;
+      hitInfo.entMomZ = _entMomZ;
+      hitInfo.entPosX = _entPosX/mm;
+      hitInfo.entPosY = _entPosY/mm;
+      hitInfo.entPosZ = _entPosZ/mm;
+      hitInfo.entTime = _entTime/ps;
 
+      hitInfo.trkSideID = 1;
+      hitInfo.trkNSideRefl = _trkNSideRefl;
       sd->ProcessHits_fTOF(aStep, NULL, hitInfo);
+      _trkNSideRefl = 0;
       return;
 // kill
       // aTrack->SetTrackStatus(fStopAndKill);
@@ -103,7 +117,7 @@ void fTOF_SteppingAction::UserSteppingAction(const G4Step* aStep)
        fTOF_SensitiveDetector* sd = 
       (fTOF_SensitiveDetector*)SDman->FindSensitiveDetector(sdName);
 
-
+//       _trkNSideRefl = 0;
       HitData hitInfo;
       // hitInfo.SecID = _SecID;
       // hitInfo.trkMomX = _trkMomX;
@@ -142,16 +156,16 @@ void fTOF_SteppingAction::UserSteppingAction(const G4Step* aStep)
        fTOF_SensitiveDetector* sd = 
       (fTOF_SensitiveDetector*)SDman->FindSensitiveDetector(sdName);
     HitData hitInfo;
-    hitInfo.entMomX = _trkMomX;
-    hitInfo.entMomY = _trkMomY;
-    hitInfo.entMomZ = _trkMomZ;
-    hitInfo.entPosX = _trkPosX/mm;
-    hitInfo.entPosY = _trkPosY/mm;
-    hitInfo.entPosZ = _trkPosZ/mm;
-    hitInfo.entTime = _trkT/ps;
-    hitInfo.trkT = _trkT/ps;
-    hitInfo.trkSideID = -500.;
-    sd->ProcessHits_fTOF(aStep, NULL, hitInfo);
+    _entMomX = _trkMomX;
+    _entMomY = _trkMomY;
+    _entMomZ = _trkMomZ;
+    _entPosX = _trkPosX/mm;
+    _entPosY = _trkPosY/mm;
+    _entPosZ = _trkPosZ/mm;
+    _entTime = _trkT/ps;
+
+//    sd->ProcessHits_fTOF(aStep, NULL, hitInfo);
+
 
   }  
     if (aPostPV->GetName().contains("World") &&
@@ -160,34 +174,6 @@ void fTOF_SteppingAction::UserSteppingAction(const G4Step* aStep)
     // std::cout << "              ESCAPING TIME               " << _trkT << std::endl;
     
   }  
-
-
-  //   std::string nameSec = aPostPV->GetName();
-  //   //std::string numberSec = nameSec.substr(nameSec.find("_impr_") + 6, 2);
-  //   std::string numberSec = nameSec.substr(22, 2);
-  //   //G4cout<<" nameSec   "<<nameSec<<G4endl
-  //   //  <<" numberSec "<<numberSec<<G4endl;
-  //   if (numberSec.find("_") != std::string::npos)
-  //     numberSec.resize(1);    
-  //   _SecID = -1;
-  //   std::istringstream streamSec(numberSec);
-  //   streamSec >> _SecID;
-  //   _trkMomX = aStep->GetPostStepPoint()->GetMomentum().getX();
-  //   _trkMomY = aStep->GetPostStepPoint()->GetMomentum().getY();
-  //   _trkMomZ = aStep->GetPostStepPoint()->GetMomentum().getZ();
-  //   _trkPosX = aStep->GetPostStepPoint()->GetPosition().getX();
-  //   _trkPosY = aStep->GetPostStepPoint()->GetPosition().getY();
-  //   _trkPosZ = aStep->GetPostStepPoint()->GetPosition().getZ();
-  //   _trkT = aStep->GetPostStepPoint()->GetGlobalTime();
-  //   _trkLength = aTrack->GetTrackLength();
-    
-  //   //G4cout<<"SecID = "<<_SecID<<G4endl;
-
-  //   //G4cout<<"aPrePV->GetName()  = "<<aPrePV->GetName()<<G4endl
-  //   //  <<"aPostPV->GetName() = "<<aPostPV->GetName()<<G4endl
-  //   //  <<"SecID              = "<<SecID<<G4endl
-  //   //  <<"trackID            = "<<trackID<<G4endl;
-  // }
 
   //
   //----- Optical photons  -----
@@ -216,21 +202,6 @@ void fTOF_SteppingAction::UserSteppingAction(const G4Step* aStep)
     stream >> _chID;
 
 
-    //G4cout<<" _chID = "<<_chID<<G4endl;
-    //G4cout<<"aPrePV->GetName()  = "<<aPrePV->GetName()<<G4endl
-    //<<"aPostPV->GetName() = "<<aPostPV->GetName()<<G4endl
-    //<<"_SecID             = "<<_SecID<<G4endl
-    //<<"_particleID        = "<<_particleID<<G4endl
-    //<<"trackID            = "<<trackID<<G4endl;       
-    ////_PosX = aPostPoint->GetPosition().x();
-    ////_PosY = aPostPoint->GetPosition().y();
-    ////_PosZ = aPostPoint->GetPosition().z();    
-    // Use PrePoint for direction.  PostPoint is in new media and will
-    //// include refraction.
-    ////const G4ThreeVector momDir = aPrePoint->GetMomentumDirection();
-    ////_barThetaX = std::atan2(momDir.x(), momDir.z());
-    ////_barThetaY = std::atan2(momDir.y(), momDir.z());
-    ////_timeLeftBar = aPostPoint->GetGlobalTime();        
   }
       
   G4OpBoundaryProcessStatus boundaryStatus = Undefined;
@@ -262,83 +233,36 @@ void fTOF_SteppingAction::UserSteppingAction(const G4Step* aStep)
     G4double flat = G4UniformRand();
     switch(boundaryStatus) {
     case Absorption:
+    	_trkNSideRefl = 0;
       break;
     case Detection:
       if (sd) {
-	// HitData hitInfo;
-	// hitInfo.SecID = _SecID;
-	// hitInfo.trkMomX = _trkMomX;
-	// hitInfo.trkMomY = _trkMomY;
-	// hitInfo.trkMomZ = _trkMomZ;
-	// hitInfo.trkPosX = _trkPosX;
-	// hitInfo.trkPosY = _trkPosY;
-	// hitInfo.trkPosZ = _trkPosZ;
-	// hitInfo.trkT = _trkT;
-	// hitInfo.trkLength = _trkLength;
-	// hitInfo.chID = _chID;
-
- //  if (_trkPosX >  0) _trkSideID = 1;
- //  else if (_trkPosX < 0) _trkSideID = -1;
-
-
- //  hitInfo.trkNSideRefl = _trkNSideRefl;
- //  hitInfo.trkSideID = _trkSideID;
-
-
-	//hitInfo.detection = true;
-	//hitInfo.SecID = -3;
-
-	//_trkMomX = -999.0;
-	//_trkMomY = -999.0;
-	//_trkMomZ = -999.0;
-	//_trkPosX = -999.0;
-	//_trkPosY = -999.0;
-	//_trkPosZ = -999.0;
-	//_trkT    = -999.0;
-	//_trkLength = -999.0;
-
-	//if(trackID==20)
-	//G4cout<<"SecID = "<<_SecID<<G4endl;
-	//if(_SecID<0 || _SecID>12)
-	//hitInfo.nMirror1 = _nBounceMirror1;
-	//hitInfo.nMirror2 = _nBounceMirror2;
-	//hitInfo.nEndMirror = _nBounceEndMirror;
-	//hitInfo.nWedgeSide = _nWedgeSide;
-	//hitInfo.nWedgeTop = _nWedgeTop;
-	//hitInfo.nWedgeBottom = _nWedgeBottom;
-	//hitInfo.nFBlockSide = _nFBlockSide;
-	//hitInfo.BarNum = _bar;
-	//hitInfo.BarX = _barX;
-	//hitInfo.BarY = _barY;
-	//hitInfo.BarZ = _barZ;
-	//hitInfo.BarThetaX = _barThetaX;
-	//hitInfo.BarThetaY = _barThetaY;
-	//hitInfo.TimeLeftBar = _timeLeftBar;
-
-
-
-
+    	  _trkNSideRefl = 0;
 	// sd->ProcessHits_fTOF(aStep, NULL, hitInfo);
       }
       break;
     case FresnelReflection:
       // Reflections of surfaces of different media
+    	_trkNSideRefl++;
       break;
     case TotalInternalReflection:
       // Add reflection probability...
       if(aTrack->GetTrackLength()>20000.0){
 	G4Track* aNonConstTrack = const_cast<G4Track*>(aTrack);
+	_trkNSideRefl = 0;
 	aNonConstTrack->SetTrackStatus(fStopAndKill);
 	//nKillPhot++;
 	//G4cout<<" fTOF_SteppingAction::UserSteppingAction;  aTrack->GetTrackLength()>20000.0 mm "<<G4endl;
-      }
-      if (flat > _probOfReflection) {
+      } else if (flat > _probOfReflection) {
 	G4Track* aNonConstTrack = const_cast<G4Track*>(aTrack);
+	_trkNSideRefl = 0;
 	aNonConstTrack->SetTrackStatus(fStopAndKill);
       } // else if (_trkPosX > 9.99*mm || _trkPosX < -9.99*mm) _trkNSideRefl++;
       //if (aPrePoint->GetMaterial()->GetName() == "quartz"){
       //_numberOfBounces++;
       //}
+      else  _trkNSideRefl++;
+
       break;
     case SpikeReflection:
       break;
@@ -369,6 +293,7 @@ void fTOF_SteppingAction::ResetPerEvent(){
   _entPosX = -999.0;
   _entPosY = -999.0;
   _entPosZ = -999.0;
+  _trkNSideRefl = 0;
 }
 
 void fTOF_SteppingAction::Reset()

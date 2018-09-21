@@ -9,7 +9,7 @@ struct HitData
   G4int ParentID;
   G4double Energy;
   G4double Wavelength;
-  G4double Time;
+  G4double Time = -999;
   G4double photPathLen;
   G4int SecID;
   G4int chID;
@@ -22,7 +22,7 @@ struct HitData
   G4double trkPosX;
   G4double trkPosY;
   G4double trkPosZ;
-  G4double trkT;
+  G4double trkT = -999;
   G4double trkLength;
 
   G4double entTime;
@@ -36,7 +36,7 @@ struct HitData
 
 
 
-  G4int trkNSideRefl;
+  G4int trkNSideRefl = -999;
   G4int trkSideID;
 
 };
