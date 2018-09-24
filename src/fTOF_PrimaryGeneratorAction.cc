@@ -98,8 +98,14 @@ void fTOF_PrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
   //xInit = _muonGen->GetX()*cm;
   //yInit = _muonGen->GetY()*cm;
   //zInit = _muonGen->GetZ()*cm;
-  xInit = CLHEP::RandGauss::shoot(0., 3.5*mm);
-  yInit = CLHEP::RandGauss::shoot(0., 3.5*mm);
+  xInit = -999.*mm;
+  yInit = -999.*mm;
+  while (xInit < -6*mm || xInit > 6*mm || yInit < -6*mm || yInit > 6*mm){
+	  xInit = CLHEP::RandGauss::shoot(0., 1.6*mm);
+	  yInit = CLHEP::RandGauss::shoot(0., 2.1*mm);
+  }
+
+
   zInit = 130*cm;             /////////////////////////////////////////////////////////////////
   ///////////////////////
   _BunchXID++;
