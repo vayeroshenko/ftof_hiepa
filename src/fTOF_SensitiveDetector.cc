@@ -10,7 +10,7 @@
 #include "G4PhysicalConstants.hh"
 
 
-fTOF_SensitiveDetector::fTOF_SensitiveDetector(G4String name) :
+fTOF_SensitiveDetector::fTOF_SensitiveDetector(G4String name) : // @suppress("Class members should be properly initialized")
   G4VSensitiveDetector(name)
 {
   //  G4RunManager* runManager = G4RunManager::GetRunManager();  

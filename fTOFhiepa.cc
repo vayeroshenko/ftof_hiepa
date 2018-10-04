@@ -2,13 +2,13 @@
 #include "G4UImanager.hh"
 #include "G4UIterminal.hh"
 
-#ifdef G4UI_USE_TCSH
+//#ifdef G4UI_USE_TCSH
 #include "G4UItcsh.hh"
-#endif
+//#endif
 
-#ifdef G4VIS_USE
+//#ifdef G4VIS_USE
 #include "G4VisExecutive.hh"
-#endif
+//#endif
 
 #include "fTOF_DetectorConstruction.hh"
 #include "fTOF_PhysicsList.hh"

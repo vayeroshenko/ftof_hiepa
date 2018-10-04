@@ -12,7 +12,7 @@
 
 using namespace std;
 
-muonGen::muonGen(Int_t mySeed){ 
+muonGen::muonGen(Int_t mySeed){  // @suppress("Class members should be properly initialized")
   _rnd = new TRandom3(mySeed);
   _x = -999.0;
   _y = -999.0;

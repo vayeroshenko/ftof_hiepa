@@ -10,7 +10,7 @@
 #include "TFile.h"
 #include "TTree.h"
 
-fTOF_RunAction::fTOF_RunAction() :
+fTOF_RunAction::fTOF_RunAction() : // @suppress("Class members should be properly initialized")
   timer(0),
   _outputFileName("fTOF.root")
   //  tree(0),

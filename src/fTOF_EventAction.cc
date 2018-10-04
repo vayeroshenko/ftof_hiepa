@@ -10,7 +10,7 @@
 #include "G4SDManager.hh"
 #include "globals.hh"
 
-fTOF_EventAction::fTOF_EventAction(fTOF_RunAction* runact,
+fTOF_EventAction::fTOF_EventAction(fTOF_RunAction* runact, // @suppress("Class members should be properly initialized")
 				     fTOF_SteppingAction* steppingAction) :
   runAction(runact), _steppingAction(steppingAction), printModulo(100)
 {
