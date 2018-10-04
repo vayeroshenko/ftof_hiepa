@@ -18,7 +18,7 @@
 //#include "crtConst.hh"
 #include "muonGen.hh"
 
-fTOF_PrimaryGeneratorAction::fTOF_PrimaryGeneratorAction() :
+fTOF_PrimaryGeneratorAction::fTOF_PrimaryGeneratorAction() : // @suppress("Class members should be properly initialized")
   _particleGun(0),
   _particleName("pi+"),
   _particleMomentum(0.5*GeV),
