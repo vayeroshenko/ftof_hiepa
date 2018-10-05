@@ -62,6 +62,8 @@ private:
   HamPmtBoxStruct hamBox;
   PlanPmtBoxStruct planBox;
 
+  G4Material *Aluminum;
+
   //LB need to be don stability tests
   //G4UserLimits* stepLimit;  // pointer to user step limits
 

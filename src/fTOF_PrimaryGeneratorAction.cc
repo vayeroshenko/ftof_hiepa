@@ -61,7 +61,7 @@ void fTOF_PrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
 
     G4double thetaMin = pi*rad / 2 - TMath::ATan(fTOFConst::centerRad / (130.*cm));
     G4double thetaMax = thetaMin;
-    G4double phiMin = 7*deg;
+    G4double phiMin = 6*deg;
     G4double phiMax = phiMin;
 
 

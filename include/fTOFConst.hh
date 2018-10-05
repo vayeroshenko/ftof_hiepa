@@ -104,7 +104,7 @@ const G4double hamBoxDepth = 13.*mm;
 // const G4double sectorLongSide = 45.*cm;
 // const G4double sectorShortSide = 24.*cm;
 const G4double sectorHeight = 40.*cm;
-const G4double sectorThickness = 1.5*cm;
+const G4double sectorThickness = 1*cm;
 
 const G4double sectorLongSide = 3.*cm;
 const G4double sectorShortSide = 2.*cm;
@@ -142,11 +142,11 @@ const G4double layerDist = 1.*mm;
 
 const G4double layerThickness = 0.1*mm;
 
-//const G4String particleName = "kaon+";
-const G4String particleName = "pi+";
+const G4String particleName = "kaon+";
+//const G4String particleName = "pi+";
 const G4double particleMomentum = 2*GeV;
 
-const G4double angle = 18*deg;
+const G4double angle = 14 *deg;
 
 //  const G4String particleName = "pi+";
 
