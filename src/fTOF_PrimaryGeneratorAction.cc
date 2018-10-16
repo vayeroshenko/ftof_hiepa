@@ -49,20 +49,23 @@ void fTOF_PrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
     G4double particleMomentum = fTOFConst::particleMomentum;
     //	G4double particleMomentum = 700 * MeV;
 
-    //	G4double thetaMax = TMath::Pi()/2 - TMath::ATan((fTOFConst::innerRad + 1*cm)/ (130. * cm));
-    //	G4double thetaMin = TMath::Pi()/2 - TMath::ATan((fTOFConst::outerRad - 1*cm)/ (130. * cm));
-    //	G4double phiMin = - fTOFConst::outerSide / (130. * cm) * rad;
-    //	G4double phiMax = - phiMin;
+    G4double thetaMax = TMath::Pi()/2 - TMath::ATan((fTOFConst::innerRad + 1*cm)/ (130. * cm));
+    G4double thetaMin = TMath::Pi()/2 - TMath::ATan((fTOFConst::outerRad - 1*cm)/ (130. * cm));
+    G4double phiMin = - fTOFConst::outerSide / (130. * cm) * rad + 13*deg;
+    G4double phiMax = - phiMin + 13*deg;
 
-    //	G4double thetaMax = 0*rad;
-    //	G4double thetaMin = pi * rad;
-    //	G4double phiMin = 0;
-    //	G4double phiMax = twopi*rad;
 
-    G4double thetaMin = pi*rad / 2 - TMath::ATan(fTOFConst::centerRad / (130.*cm));
-    G4double thetaMax = thetaMin;
-    G4double phiMin = 6*deg;
-    G4double phiMax = phiMin;
+
+
+//    G4double thetaMax = 0*rad;
+//    G4double thetaMin = pi * rad;
+//    G4double phiMin = 0;
+//    G4double phiMax = twopi*rad;
+
+//    G4double thetaMin = pi*rad / 2 - TMath::ATan(fTOFConst::centerRad / (130.*cm));
+//    G4double thetaMax = thetaMin;
+//    G4double phiMin = 6*deg;
+//    G4double phiMax = phiMin;
 
 
     Scan(anEvent, nParticles,

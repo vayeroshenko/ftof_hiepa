@@ -431,7 +431,7 @@ G4VPhysicalVolume* fTOF_DetectorConstruction::Construct()
                 Ta.setY(fTOFConst::sectorThickness/2.);
                 //          Ta.setZ(fTOFConst::centerRad * TMath::Sin(360./fTOFConst::nSec*i *deg));
                 Tr = G4Transform3D(Ra,Ta);
-                secAssembly->AddPlacedVolume(strAbs,Tr);
+//                secAssembly->AddPlacedVolume(strAbs,Tr);
 
 
                 Ta = G4ThreeVector(0.,0.,0.);
@@ -444,7 +444,7 @@ G4VPhysicalVolume* fTOF_DetectorConstruction::Construct()
                 Ta.setY(- fTOFConst::sectorThickness/2.);
                 //          Ta.setZ(fTOFConst::centerRad * TMath::Sin(360./fTOFConst::nSec*i *deg));
                 Tr = G4Transform3D(Ra,Ta);
-                secAssembly->AddPlacedVolume(strAbs,Tr);
+//                secAssembly->AddPlacedVolume(strAbs,Tr);
             }
 
 
@@ -919,11 +919,11 @@ G4VPhysicalVolume* fTOF_DetectorConstruction::Construct()
     G4SDManager* SDman = G4SDManager::GetSDMpointer();
     fTOF_SensitiveDetector* aSD = new fTOF_SensitiveDetector("fTOF");
     SDman->AddNewDetector(aSD);
-    hamChan.logical->SetSensitiveDetector(aSD);
-    planChan.logical->SetSensitiveDetector(aSD);
+    //    hamChan.logical->SetSensitiveDetector(aSD);
+    //    planChan.logical->SetSensitiveDetector(aSD);
 
-    leftLogical->SetSensitiveDetector(aSD);
-    rightLogical->SetSensitiveDetector(aSD);
+    //    leftLogical->SetSensitiveDetector(aSD);
+    //    rightLogical->SetSensitiveDetector(aSD);
     // frontLogical->SetSensitiveDetector(aSD);
     // backLogical->SetSensitiveDetector(aSD);
 

@@ -25,6 +25,8 @@
 #include "MagneticField.hh"
 #include "G4TransportationManager.hh"
 
+#include "fTOFConst.hh"
+
 #include "Randomize.hh"
 
 int main(int argc, char** argv)
