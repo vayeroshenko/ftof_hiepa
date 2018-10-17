@@ -11,7 +11,7 @@
 #include "fTOFConst.hh"
 
 
-fTOF_SteppingAction::fTOF_SteppingAction(fTOF_PrimaryGeneratorAction* 
+fTOF_SteppingAction::fTOF_SteppingAction(fTOF_PrimaryGeneratorAction*
                                          genAction) :
     _genAction(genAction)
 {
@@ -103,7 +103,9 @@ void fTOF_SteppingAction::UserSteppingAction(const G4Step* aStep)
 
     }
     if (aPostPV->GetName().contains("World") &&
-            aPrePV->GetName().contains("quartzBar") && aTrack->GetDynamicParticle()->GetDefinition()->GetParticleName() == fTOFConst::particleName) {  /////////////////////////////////////////////////////////////////////////////////
+            aPrePV->GetName().contains("quartzBar") &&
+            aTrack->GetDynamicParticle()->GetDefinition()->GetParticleName() == fTOFConst::particleName &&
+            fTOFConst::enteringHit == true) {  /////////////////////////////////////////////////////////////////////////////////
 
         // std::cout << "              ESCAPING TIME               " << _trkT << std::endl;
 

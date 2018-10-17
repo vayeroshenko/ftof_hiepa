@@ -1,10 +1,13 @@
 #ifndef fTOFConst_h
-#define fTOFConst_h
+
 
 #include "TMath.h"
 #include "G4SystemOfUnits.hh"
 #include "G4PhysicalConstants.hh"
 
+#include "globals.hh"
+
+#define fTOFConst_h
 namespace fTOFConst{
 
 const G4double cmMy = 10;
@@ -146,9 +149,8 @@ const G4double layerThickness = 0.1*mm;
 const G4String particleName = "pi+";
 const G4double particleMomentum = 2*GeV;
 
-const G4double angle = 18 *deg;
-
-//  const G4String particleName = "pi+";
+const G4double angle = 13 *deg;
+const G4bool enteringHit = false;
 
 
 
