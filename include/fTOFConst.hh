@@ -4,6 +4,7 @@
 #include "TMath.h"
 #include "G4SystemOfUnits.hh"
 #include "G4PhysicalConstants.hh"
+#include "globals.hh"
 
 namespace fTOFConst{
 
