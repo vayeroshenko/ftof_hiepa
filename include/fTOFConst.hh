@@ -123,10 +123,23 @@ const G4double mixerWindowZ = 15.*mm;
 const G4double mixerLength = 15.*cm;
 
 
+
+ ////////////////////////////////////////////////
 const G4int nSec = 101;
-const G4int nDrawSec = 1;
+const G4int nDrawSec = 101;
 
 const G4int nLayers = 1;
+
+const G4String particleName = "pi+";
+const G4double particleMomentum = 2*GeV;
+
+const G4double angle = 18 *deg;
+const G4bool enteringHit = false;
+ ///////////////////////////////////////////////
+
+
+
+
 
 const G4double innerRad = 47.*cm;
 const G4double outerRad = 105.*cm;
@@ -136,21 +149,17 @@ const G4double centerRad = (innerRad * TMath::Cos(TMath::Pi() / nSec) +
 const G4double absInnerSide = 0.1*mm;
 const G4double absOuterSide = absInnerSide * outerRad / innerRad;
 
+const G4double VertHeight = outerRad - innerRad;
 
+const G4double innerSide = 2. * (centerRad - VertHeight * TMath::Cos(angle-2*deg)/2) * TMath::Sin(TMath::Pi() / nSec) - absInnerSide;
+const G4double outerSide = 2. * (centerRad + VertHeight * TMath::Cos(angle+2*deg)/2) * TMath::Sin(TMath::Pi() / nSec) - absOuterSide;
 
-const G4double innerSide = 2. * innerRad * TMath::Sin(TMath::Pi() / nSec) - absInnerSide;
-const G4double outerSide = 2. * outerRad * TMath::Sin(TMath::Pi() / nSec) - absOuterSide;
-
-const G4double layerDist = 1.*mm;
+const G4double layerDist = 3.*mm;
 
 const G4double layerThickness = 0.1*mm;
 
 //const G4String particleName = "kaon+";
-const G4String particleName = "pi+";
-const G4double particleMomentum = 2*GeV;
 
-const G4double angle = 13 *deg;
-const G4bool enteringHit = false;
 
 
 
