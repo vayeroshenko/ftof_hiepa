@@ -303,8 +303,8 @@ G4VPhysicalVolume* fTOF_DetectorConstruction::Construct()
 
     G4Trd *absTrd = new G4Trd(
                 "absorber",
-                abs.shortSide/2.,
-                abs.longSide/2.,
+                abs.shortSide/2.*1.1,
+                abs.longSide/2.*1.1,
                 abs.thickness/2. + fTOFConst::layerDist/2,
                 abs.thickness/2.+ fTOFConst::layerDist/2,
                 abs.height/2.
@@ -414,9 +414,6 @@ G4VPhysicalVolume* fTOF_DetectorConstruction::Construct()
                 Ta = G4ThreeVector(0.,0.,0.);
                 Ra = G4RotationMatrix();
 
-
-                //                Ra.rotateX(fTOFConst::angle);
-
                 Ra.rotateY(- 360./fTOFConst::nSec*i *deg + 90.*deg);
 
                 Ra = Ra * RTilt;
@@ -427,6 +424,62 @@ G4VPhysicalVolume* fTOF_DetectorConstruction::Construct()
 
                 Tr = G4Transform3D(Ra,Ta);
                 secAssembly->AddPlacedVolume(fullBarLog,Tr);
+
+
+                ////////////// Absorber for straight photons  //////////////////
+
+                Ta = G4ThreeVector(0.,0.,0.);
+                Ra = G4RotationMatrix();
+
+                Ra.rotateY(- 360./fTOFConst::nSec*i *deg + 90.*deg);
+                Ta.setX(fTOFConst::centerRad * TMath::Cos(360./fTOFConst::nSec*i *deg));
+                Ta.setY((sector.thickness) * (l+0.5));
+                Ta.setZ(fTOFConst::centerRad * TMath::Sin(360./fTOFConst::nSec*i *deg));
+
+                Ta -= G4ThreeVector(fTOFConst::centerRad * TMath::Cos(360./fTOFConst::nSec*i *deg),
+                                    dist,
+                                    fTOFConst::centerRad * TMath::Sin(360./fTOFConst::nSec*i *deg));
+
+                Ta = (Ra * (RTilt * (Ra.inverse() * Ta)));
+
+                Ta += G4ThreeVector(fTOFConst::centerRad * TMath::Cos(360./fTOFConst::nSec*i *deg),
+                                    dist,
+                                    fTOFConst::centerRad * TMath::Sin(360./fTOFConst::nSec*i *deg));
+
+
+                Ra = Ra * RTilt;
+
+                Tr = G4Transform3D(Ra,Ta);
+                secAssembly->AddPlacedVolume(strAbs,Tr);
+
+                ////////////// Absorber for straight photons  //////////////////
+
+                Ta = G4ThreeVector(0.,0.,0.);
+                Ra = G4RotationMatrix();
+
+                Ra.rotateY(- 360./fTOFConst::nSec*i *deg + 90.*deg);
+                Ta.setX(fTOFConst::centerRad * TMath::Cos(360./fTOFConst::nSec*i *deg));
+                Ta.setY((sector.thickness) * (l-0.5));
+                Ta.setZ(fTOFConst::centerRad * TMath::Sin(360./fTOFConst::nSec*i *deg));
+
+                Ta -= G4ThreeVector(fTOFConst::centerRad * TMath::Cos(360./fTOFConst::nSec*i *deg),
+                                    dist,
+                                    fTOFConst::centerRad * TMath::Sin(360./fTOFConst::nSec*i *deg));
+
+                Ta = (Ra * (RTilt * (Ra.inverse() * Ta)));
+
+                Ta += G4ThreeVector(fTOFConst::centerRad * TMath::Cos(360./fTOFConst::nSec*i *deg),
+                                    dist,
+                                    fTOFConst::centerRad * TMath::Sin(360./fTOFConst::nSec*i *deg));
+
+
+                Ra = Ra * RTilt;
+
+                Tr = G4Transform3D(Ra,Ta);
+                secAssembly->AddPlacedVolume(strAbs,Tr);
+
+                ////////////////////////////////////////////////////
+
 
             }
 

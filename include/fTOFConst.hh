@@ -107,7 +107,7 @@ const G4double hamBoxDepth = 13.*mm;
 // const G4double sectorLongSide = 45.*cm;
 // const G4double sectorShortSide = 24.*cm;
 const G4double sectorHeight = 40.*cm;
-const G4double sectorThickness = 1.5*cm;
+const G4double sectorThickness = 2*1.5*cm;
 
 const G4double sectorLongSide = 3.*cm;
 const G4double sectorShortSide = 2.*cm;
@@ -126,7 +126,7 @@ const G4double mixerLength = 15.*cm;
 
  ////////////////////////////////////////////////
 const G4int nSec = 101;
-const G4int nDrawSec = 101;
+const G4int nDrawSec = 1;
 
 const G4int nLayers = 1;
 
@@ -134,7 +134,7 @@ const G4String particleName = "pi+";
 const G4double particleMomentum = 2*GeV;
 
 const G4double angle = 18 *deg;
-const G4bool enteringHit = false;
+const G4bool enteringHit = true;
  ///////////////////////////////////////////////
 
 
@@ -146,13 +146,13 @@ const G4double outerRad = 105.*cm;
 const G4double centerRad = (innerRad * TMath::Cos(TMath::Pi() / nSec) +
                             outerRad * TMath::Cos(TMath::Pi() / nSec)) / 2.;
 
-const G4double absInnerSide = 0.1*mm;
+const G4double absInnerSide = 1*mm;
 const G4double absOuterSide = absInnerSide * outerRad / innerRad;
 
 const G4double VertHeight = outerRad - innerRad;
 
-const G4double innerSide = 2. * (centerRad - VertHeight * TMath::Cos(angle-2*deg)/2) * TMath::Sin(TMath::Pi() / nSec) - absInnerSide;
-const G4double outerSide = 2. * (centerRad + VertHeight * TMath::Cos(angle+2*deg)/2) * TMath::Sin(TMath::Pi() / nSec) - absOuterSide;
+const G4double innerSide = 2. * (centerRad - VertHeight * TMath::Cos(angle/*-2*deg*/)/2) * TMath::Sin(TMath::Pi() / nSec) - absInnerSide;
+const G4double outerSide = 2. * (centerRad + VertHeight * TMath::Cos(angle/*+2*deg*/)/2) * TMath::Sin(TMath::Pi() / nSec) - absOuterSide;
 
 const G4double layerDist = 3.*mm;
 
