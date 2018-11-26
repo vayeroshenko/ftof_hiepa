@@ -131,23 +131,32 @@ const G4int nDrawSec = 1;
 const G4int nLayers = 1;
 
 const G4String particleName = "pi+";
+//const G4String particleName = "kaon+";
 const G4double particleMomentum = 2*GeV;
+const G4double dPhiPrim =  3.2*deg;
+const G4double angle = 25*deg;
 
-const G4double angle = 18 *deg;
 const G4bool enteringHit = true;
  ///////////////////////////////////////////////
 
+////////////////////////////////////////////////////////////////////////////////////////
+//                         dPhi primary (1 Tl, positive charge)                       //
+//  _________________________________________________________________________________ //
+// | momentum, GeV |  0.25 |  0.50  |  0.75 |  1.00 |  1.25 |  1.50 |  1.75 |  2.00 | //
+// |---------------|-------|--------|-------|-------|-------|-------|-------|-------| //
+// | dPhi, degrees |  51.0 |  25.5  |  17.0 |  12.8 |  10.2 |  8.50 |  7.30 |  6.40 | //
+// ---------------------------------------------------------------------------------- //
+//                                                                                    //
+////////////////////////////////////////////////////////////////////////////////////////
 
 
-
-
-const G4double innerRad = 47.*cm;
+const G4double innerRad = 44.*cm;
 const G4double outerRad = 105.*cm;
 const G4double centerRad = (innerRad * TMath::Cos(TMath::Pi() / nSec) +
                             outerRad * TMath::Cos(TMath::Pi() / nSec)) / 2.;
 
-const G4double absInnerSide = 1*mm;
-const G4double absOuterSide = absInnerSide * outerRad / innerRad;
+const G4double absInnerSide = 1*mm + 3*mm;
+const G4double absOuterSide = absInnerSide * outerRad / innerRad + 3*mm;
 
 const G4double VertHeight = outerRad - innerRad;
 

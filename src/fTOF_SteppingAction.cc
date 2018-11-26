@@ -81,8 +81,8 @@ void fTOF_SteppingAction::UserSteppingAction(const G4Step* aStep)
     }
 
 
-    if (aPrePV->GetName().contains("World") &&
-            aPostPV->GetName().contains("quartzBar"/*"strAbs"*/) && aTrack->GetDynamicParticle()->GetDefinition()->GetParticleName() == fTOFConst::particleName) {
+    if ((aPrePV->GetName().contains("World") || aPrePV->GetName().contains("strAbs")) &&
+            aPostPV->GetName().contains("quartzBar") && aTrack->GetDynamicParticle()->GetDefinition()->GetParticleName() == fTOFConst::particleName) {
 
         //    std::cout << "              ENTERING TIME               " << _trkT << std::endl;
         G4String sdName = "fTOF";
