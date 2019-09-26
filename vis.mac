@@ -25,5 +25,5 @@
 
 /vis/viewer/set/viewpointThetaPhi 0 0 deg
 
-/run/beamOn 10000
+/run/beamOn 1000
 
