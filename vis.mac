@@ -1,4 +1,4 @@
-#/vis/open HepRepFile
+/vis/open HepRepFile
 #/vis/open RayTracerX
 #/vis/open OGL
 /vis/scene/create
@@ -25,5 +25,5 @@
 
 /vis/viewer/set/viewpointThetaPhi 0 0 deg
 
-/run/beamOn 1000
+/run/beamOn 1
 

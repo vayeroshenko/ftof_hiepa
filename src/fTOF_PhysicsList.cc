@@ -202,6 +202,11 @@ void fTOF_PhysicsList::ConstructOp()
   // Optical Photon Processes
   theCerenkovProcess = new G4Cerenkov("Cerenkov");
 
+  fMieHGScatteringProcess = new G4OpMieHG();
+  fWLSProcess = new G4OpWLS();
+
+
+
   G4cout<<" 111 "<<G4endl;
 
   //theCerenkovProcess->DumpPhysicsTable();
@@ -232,6 +237,7 @@ void fTOF_PhysicsList::ConstructOp()
       pmanager->AddDiscreteProcess(new G4OpAbsorption());
       pmanager->AddDiscreteProcess(new G4OpRayleigh());
       pmanager->AddDiscreteProcess(theBoundaryProcess);
+      pmanager->AddDiscreteProcess(fWLSProcess);
     }
   }
 }

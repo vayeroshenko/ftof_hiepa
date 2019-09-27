@@ -88,40 +88,27 @@ void fTOF_PrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
   ////////////////////////
   _particleName = "pi+";
   //_particleMomentum = 1500.0*MeV;
-  _particleMomentum = 180.*GeV;           ////////////////////////////////// particle momentum
-  //_particleMomentum = 400.0*MeV;
-  _muonGen->GenerateMuon((crtConst::hodo_hight+0.5));
-  //_muonGen->GenerateMuon((83.0 + 38.1 + 30.0));
-  //_muonGen->GenerateMuon((84.0 + 40 + 10));
-  _ThetaAngle = _muonGen->GetTheta()*deg;
-  _PhiAngle = _muonGen->GetPhi()*deg;
-  //xInit = _muonGen->GetX()*cm;
-  //yInit = _muonGen->GetY()*cm;
-  //zInit = _muonGen->GetZ()*cm;
-  xInit = -999.*mm;
-  yInit = -999.*mm;
-  while (xInit < -6*mm || xInit > 6*mm || yInit < -6*mm || yInit > 6*mm){
-	  xInit = CLHEP::RandGauss::shoot(0., 1.6*mm);
-	  yInit = CLHEP::RandGauss::shoot(0., 2.1*mm);
-  }
+  _particleMomentum = 2.*GeV;           ////////////////////////////////// particle momentum
 
 
-  zInit = 130*cm;             /////////////////////////////////////////////////////////////////
+  xInit = 0.*mm;
+  yInit = 0.*mm;
+  zInit = 0*cm;
   ///////////////////////
   _BunchXID++;
   particle = particleTable->FindParticle(_particleName);
   m = particle->GetPDGMass();
-  Ekin = (TMath::Sqrt(_particleMomentum*_particleMomentum 
-		      + m*m) - m);
+  Ekin = (TMath::Sqrt(_particleMomentum*_particleMomentum
+              + m*m) - m);
   ////dX = std::sin(_ThetaAngle)*std::cos(_PhiAngle);
   ////dY = std::sin(_ThetaAngle)*std::sin(_PhiAngle);
   ////dZ = std::cos(_ThetaAngle);
   //dX = std::sin(_ThetaAngle)*std::sin(_PhiAngle);
   //dZ = std::sin(_ThetaAngle)*std::cos(_PhiAngle);
   //dY = std::cos(_ThetaAngle);
-  dX =	0;
-  dZ =  -130.;
-  dY =  0;
+  dX =	0.;
+  dZ =  130.*mm;
+  dY =  85.*mm;
   G4ThreeVector dir(dX, dY, dZ);
   _particleGun->SetParticleDefinition(particle);
   _particleGun->SetParticleMomentumDirection(dir);

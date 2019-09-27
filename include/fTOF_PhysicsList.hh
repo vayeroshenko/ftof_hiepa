@@ -2,6 +2,8 @@
 #define fTOF_PhysicsList_h 1
 
 #include "G4VUserPhysicsList.hh"
+#include "G4OpMieHG.hh"
+#include "G4OpWLS.hh"
 #include "globals.hh"
 
 class G4Cerenkov;
@@ -43,6 +45,8 @@ private:
   G4OpAbsorption* theAbsorptionProcess;
   G4OpRayleigh* theRayleighScatteringProcess;
   G4OpBoundaryProcess* theBoundaryProcess;
+  G4OpMieHG* fMieHGScatteringProcess;
+  G4OpWLS*             fWLSProcess;
 
 
 };
