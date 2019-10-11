@@ -141,7 +141,10 @@ void fTOF_DetectorConstruction::DefineMaterials()
         Absorption[i] = 100*m;      // Fake number for no absorption
         AirAbsorption[i] = 10.*cm;   // If photon hits air, kill it
         AirRefractiveIndex[i] = 1.;
-        WaterRefractiveIndex[i] = 1.3;
+
+//        WaterRefractiveIndex[i] = 1.3;
+        WaterRefractiveIndex[i] = 1.04;
+
         PhotonEnergy[num - (i+1)] = twopi*hbarc/WaveLength[i];
         /* Absorption is given per length and G4 needs mean free path
        length, calculate it here
@@ -276,8 +279,8 @@ G4VPhysicalVolume* fTOF_DetectorConstruction::Construct()
                                     fTOFConst::boxZsize/2.);
 
     G4VSolid* mirrorSolid = new G4Box("mirror",
-                                      fTOFConst::boxXYsize/2. - fTOFConst::airTubeD/4.,
-                                      fTOFConst::boxXYsize/2. - fTOFConst::airTubeD/4.,
+                                      fTOFConst::boxXYsize/2.,
+                                      fTOFConst::boxXYsize/2.,
                                       1.*mm);
     G4LogicalVolume* mirrorLog = new G4LogicalVolume(mirrorSolid,
                                                      Aluminum,
@@ -625,8 +628,8 @@ G4VPhysicalVolume* fTOF_DetectorConstruction::Construct()
 
     glassLogical->SetVisAttributes(quartzVisAtt);
 
-    wlsOutLogical->SetVisAttributes(sensitiveVisAtt);
-    wlsInLogical->SetVisAttributes(sensitiveVisAtt);
+//    wlsOutLogical->SetVisAttributes(sensitiveVisAtt);
+//    wlsInLogical->SetVisAttributes(sensitiveVisAtt);
 
     //    mirrorLog->SetVisAttributes(sensitiveVisAtt);
 
@@ -742,7 +745,7 @@ G4VPhysicalVolume* fTOF_DetectorConstruction::Construct()
     //    hamChan.logical->SetSensitiveDetector(aSD);
     //    planChan.logical->SetSensitiveDetector(aSD);
 
-    detectorLog->SetSensitiveDetector(aSD);
+    glassLogical->SetSensitiveDetector(aSD);
 
     //  leftLogical->SetSensitiveDetector(aSD);
     //  rightLogical->SetSensitiveDetector(aSD);

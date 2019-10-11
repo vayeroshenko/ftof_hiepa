@@ -34,6 +34,7 @@ void fTOF_SensitiveDetector::Initialize(G4HCofThisEvent* HCE)
 G4bool fTOF_SensitiveDetector::ProcessHits(G4Step* aStep, 
 					    G4TouchableHistory* ROhist)
 {
+  G4cout << "HI!" << G4endl;
   HitData blat;
   return ProcessHits_fTOF(aStep, ROhist, blat);
 }

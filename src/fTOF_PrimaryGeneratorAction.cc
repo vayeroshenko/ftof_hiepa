@@ -86,7 +86,8 @@ void fTOF_PrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
   */
 
   ////////////////////////
-  _particleName = "pi+";
+//  _particleName = "pi+";
+  _particleName = "kaon+";
   //_particleMomentum = 1500.0*MeV;
   _particleMomentum = 2.*GeV;           ////////////////////////////////// particle momentum
 
@@ -108,7 +109,7 @@ void fTOF_PrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
   //dY = std::cos(_ThetaAngle);
   dX =	0.;
   dZ =  130.*mm;
-  dY =  85.*mm;
+  dY =  45.*mm;
   G4ThreeVector dir(dX, dY, dZ);
   _particleGun->SetParticleDefinition(particle);
   _particleGun->SetParticleMomentumDirection(dir);

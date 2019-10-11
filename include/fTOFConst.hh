@@ -147,10 +147,10 @@ namespace fTOFConst{
   const G4double boxXYsize = 2*105.*cm;
   const G4double boxZsize = 3.*cm;
 
-  const G4double airTubeD = 3.1*cm;
+  const G4double airTubeD = 2.9*cm;
 
-  const G4double glassTubeD = 3.*cm;
-  const G4double glassTubeInD = 1.8*cm;
+  const G4double glassTubeD = 2.8*cm;
+  const G4double glassTubeInD = 1.6*cm;
   const G4double WLSskinThikness = 0.5*mm;
 
 
